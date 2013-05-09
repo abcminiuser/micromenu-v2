@@ -4,7 +4,7 @@
           (C) Dean Camera, 2012
         www.fourwalledcubicle.com
      dean [at] fourwalledcubicle.com
-	
+
         Royalty-free for all uses.
 	                                  */
 #ifndef _MICRO_MENU_H_
@@ -12,9 +12,9 @@
 
 	#include <stddef.h>
 	#include <stdint.h>
-	
+
 	#include "MenuConfig.h"
-	
+
 	/** Type define for a menu item. Menu items should be initialized via the helper
 	 *  macro \ref MENU_ITEM(), not created from this type directly in user-code.
 	 */
@@ -27,7 +27,7 @@
 		void (*EnterCallback)(void); /**< Pointer to the optional menu-specific enter callback of this menu item */
 		const char Text[]; /**< Menu item text to pass to the menu display callback function */
 	} Menu_Item_t;
-	
+
 	/** Creates a new menu item entry with the specified links and callbacks.
 	 *
 	 *  \param[in] Name      Name of the menu entry, must be unique.
@@ -44,35 +44,35 @@
 		extern Menu_Item_t MENU_ITEM_STORAGE Parent;   \
 		extern Menu_Item_t MENU_ITEM_STORAGE Child;  \
 		Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, Text}
-	
+
 	/** Relative navigational menu entry for \ref Menu_Navigate(), to move to the menu parent. */
-	#define MENU_PARENT         Menu_GetCurrentMenu()->Parent
+	#define MENU_PARENT         MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Parent)
 
 	/** Relative navigational menu entry for \ref Menu_Navigate(), to move to the menu child. */
-	#define MENU_CHILD          Menu_GetCurrentMenu()->Child
+	#define MENU_CHILD          MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Child)
 
 	/** Relative navigational menu entry for \ref Menu_Navigate(), to move to the next linked menu item. */
-	#define MENU_NEXT           Menu_GetCurrentMenu()->Next
+	#define MENU_NEXT           MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Next)
 
 	/** Relative navigational menu entry for \ref Menu_Navigate(), to move to the previous linked menu item. */
-	#define MENU_PREVIOUS       Menu_GetCurrentMenu()->Previous
+	#define MENU_PREVIOUS       MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Previous)
 
 	/** Null menu entry, used in \ref MENU_ITEM() definitions where no menu link is to be made. */
 	extern Menu_Item_t MENU_ITEM_STORAGE NULL_MENU;
-	
+
 	/** Retrieves the currently selected meny item.
 	 *
 	 *  \return Pointer to the currently selected meny item.
 	 */
 	Menu_Item_t* Menu_GetCurrentMenu(void);
-	
+
 	/** Navigates to an absolute or relative menu entry.
 	 *
 	 * \param[in] NewMenu  Pointer to the absolute menu item to select, or one of \ref MENU_PARENT,
 	 *                     \ref MENU_CHILD, \ref MENU_NEXT or \ref MENU_PREVIOUS for relative navigation.
 	 */
 	void Menu_Navigate(Menu_Item_t* const NewMenu);
-	
+
 	/** Configures the menu text write callback function, fired for all menu items. Within this callback
 	 *  function the user should implement code to display the current menu text stored in \ref MENU_ITEM_STORAGE
 	 *  memory space.
@@ -80,7 +80,7 @@
 	 *  \ref WriteFunc  Pointer to a callback function to execute for each selected menu item.
 	 */
 	void Menu_SetGenericWriteCallback(void (*WriteFunc)(const char* Text));
-	
+
 	/** Enters the currently selected menu item, running its configured callback function (if any). */
 	void Menu_EnterCurrentItem(void);
 
