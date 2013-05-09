@@ -45,17 +45,20 @@ static void Generic_Write(const char* Text)
 		puts_P(Text);
 }
 
-MENU_ITEM(Level1Item1, Level1Item2, Level1Item3, NULL_MENU, NULL_MENU, Level1Item1_Select, Level1Item1_Enter, "L1 I1");
-MENU_ITEM(Level1Item2, Level1Item3, Level1Item1, NULL_MENU, NULL_MENU, NULL, NULL, "L1 I2");
-MENU_ITEM(Level1Item3, Level1Item1, Level1Item2, NULL_MENU, NULL_MENU, NULL, NULL, "L1 I3");
+MENU_ITEM(Menu_1, Menu_2, Menu_3, NULL_MENU, Menu_1_1,  NULL, NULL, "1");
+MENU_ITEM(Menu_2, Menu_3, Menu_1, NULL_MENU, NULL_MENU, NULL, NULL, "2");
+MENU_ITEM(Menu_3, Menu_1, Menu_2, NULL_MENU, NULL_MENU, NULL, NULL, "3");
+
+MENU_ITEM(Menu_1_1, Menu_1_2, Menu_1_2, NULL_MENU, NULL_MENU, NULL, NULL, "1.1");
+MENU_ITEM(Menu_1_2, Menu_1_1, Menu_1_1, NULL_MENU, NULL_MENU, NULL, NULL, "1.2");
 
 int main(void)
 {
 	/* Set up the default menu text write callback, and navigate to an absolute menu item entry. */
 	Menu_SetGenericWriteCallback(Generic_Write);
-	Menu_Navigate(&Level1Item1);
-	
-    while(1)
+	Menu_Navigate(&Menu_1);
+
+    while (1)
     {
 		/* Example usage of Micromenu - here you can create your custom menu navigation system; you may wish to perform
 		 * other tasks while detecting key presses, enter sleep mode while waiting for user input, etc.
