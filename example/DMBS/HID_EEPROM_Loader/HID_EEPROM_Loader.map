@@ -1,0 +1,462 @@
+Archive member included because of file (symbol)
+
+c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+                              c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o (exit)
+c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eeupd_byte_atmega128.o)
+                              HID_EEPROM_Loader.o (__eeupd_byte_m128)
+
+Discarded input sections
+
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+ .text          0x00000000        0x0 HID_EEPROM_Loader.o
+ .bss           0x00000000        0x0 HID_EEPROM_Loader.o
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .text.libgcc.mul
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .text.libgcc.div
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .text.libgcc.prologue
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .text.libgcc.builtins
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .text.libgcc.fmul
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .text.libgcc.fixed
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eeupd_byte_atmega128.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eeupd_byte_atmega128.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00000000         0x00020000         xr
+data             0x00800100         0x0000ff00         rw !x
+eeprom           0x00810000         0x00010000         rw !x
+fuse             0x00820000         0x00000400         rw !x
+lock             0x00830000         0x00000400         rw !x
+signature        0x00840000         0x00000400         rw !x
+user_signatures  0x00850000         0x00000400         rw !x
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+Address of section .data set to 0x800100
+LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+LOAD InputEEData.o
+LOAD HID_EEPROM_Loader.o
+LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a
+START GROUP
+LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a
+LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a
+LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a
+END GROUP
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x00000000      0x18a
+ *(.vectors)
+ .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+                0x00000000                __vector_default
+                0x00000000                __vectors
+ *(.vectors)
+ *(.progmem.gcc*)
+                0x0000008c                . = ALIGN (0x2)
+                0x0000008c                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x0000008c        0x0 linker stubs
+ *(.trampolines*)
+                0x0000008c                __trampolines_end = .
+ *(.progmem*)
+ .progmem.data  0x0000008c       0xa8 InputEEData.o
+                0x0000008c                _binary_InputEEData_bin_start
+                0x00000134                _binary_InputEEData_bin_end
+                0x00000134                . = ALIGN (0x2)
+ *(.jumptables)
+ *(.jumptables*)
+ *(.lowtext)
+ *(.lowtext*)
+                0x00000134                __ctors_start = .
+ *(.ctors)
+                0x00000134                __ctors_end = .
+                0x00000134                __dtors_start = .
+ *(.dtors)
+                0x00000134                __dtors_end = .
+ SORT(*)(.ctors)
+ SORT(*)(.dtors)
+ *(.init0)
+ .init0         0x00000134        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+                0x00000134                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x00000134        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+ *(.init2)
+ *(.init3)
+ *(.init3)
+ *(.init4)
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ *(.init8)
+ *(.init9)
+ .init9         0x00000140        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+ *(.init9)
+ *(.text)
+ .text          0x00000144        0x2 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+                0x00000144                __vector_22
+                0x00000144                __vector_28
+                0x00000144                __vector_1
+                0x00000144                __vector_32
+                0x00000144                __vector_34
+                0x00000144                __vector_24
+                0x00000144                __vector_12
+                0x00000144                __bad_interrupt
+                0x00000144                __vector_6
+                0x00000144                __vector_31
+                0x00000144                __vector_3
+                0x00000144                __vector_23
+                0x00000144                __vector_30
+                0x00000144                __vector_25
+                0x00000144                __vector_11
+                0x00000144                __vector_13
+                0x00000144                __vector_17
+                0x00000144                __vector_19
+                0x00000144                __vector_7
+                0x00000144                __vector_27
+                0x00000144                __vector_5
+                0x00000144                __vector_33
+                0x00000144                __vector_4
+                0x00000144                __vector_9
+                0x00000144                __vector_2
+                0x00000144                __vector_21
+                0x00000144                __vector_15
+                0x00000144                __vector_29
+                0x00000144                __vector_8
+                0x00000144                __vector_26
+                0x00000144                __vector_14
+                0x00000144                __vector_10
+                0x00000144                __vector_16
+                0x00000144                __vector_18
+                0x00000144                __vector_20
+                0x00000146                . = ALIGN (0x2)
+ *(.text.*)
+ .text.startup.main
+                0x00000146       0x1e HID_EEPROM_Loader.o
+                0x00000146                main
+ .text.avr-libc
+                0x00000164       0x22 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eeupd_byte_atmega128.o)
+                0x00000164                __eeupd_byte_m128
+                0x00000166                __eeupd_r18_m128
+                0x00000186                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x00000186        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+                0x00000186                _exit
+                0x00000186                exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x00000186        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ *(.fini0)
+                0x0000018a                _etext = .
+
+.data           0x00800100        0x0 load address 0x0000018a
+                0x00800100                PROVIDE (__data_start, .)
+ *(.data)
+ .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+ .data          0x00800100        0x0 HID_EEPROM_Loader.o
+ .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eeupd_byte_atmega128.o)
+ *(.data*)
+ *(.rodata)
+ *(.rodata*)
+ *(.gnu.linkonce.d*)
+                0x00800100                . = ALIGN (0x2)
+                0x00800100                _edata = .
+                0x00800100                PROVIDE (__data_end, .)
+
+.bss            0x00800100        0x0
+                0x00800100                PROVIDE (__bss_start, .)
+ *(.bss)
+ *(.bss*)
+ *(COMMON)
+                0x00800100                PROVIDE (__bss_end, .)
+                0x0000018a                __data_load_start = LOADADDR (.data)
+                0x0000018a                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x00800100        0x0
+                0x00800100                PROVIDE (__noinit_start, .)
+ *(.noinit*)
+                0x00800100                PROVIDE (__noinit_end, .)
+                0x00800100                _end = .
+                0x00800100                PROVIDE (__heap_start, .)
+
+.eeprom         0x00810000        0x0
+ *(.eeprom*)
+                0x00810000                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.user_signatures
+ *(.user_signatures*)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x00000000       0x30
+ *(.comment)
+ .comment       0x00000000       0x30 HID_EEPROM_Loader.o
+                                 0x31 (size before relaxing)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000       0x20
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x20 HID_EEPROM_Loader.o
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000      0x145
+ *(.debug_info)
+ .debug_info    0x00000000      0x145 HID_EEPROM_Loader.o
+ *(.gnu.linkonce.wi.*)
+
+.debug_abbrev   0x00000000       0xe7
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000       0xe7 HID_EEPROM_Loader.o
+
+.debug_line     0x00000000      0x151
+ *(.debug_line)
+ .debug_line    0x00000000      0x151 HID_EEPROM_Loader.o
+
+.debug_frame    0x00000000       0x24
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x24 HID_EEPROM_Loader.o
+
+.debug_str      0x00000000      0x1b5
+ *(.debug_str)
+ .debug_str     0x00000000      0x1b5 HID_EEPROM_Loader.o
+                                0x1ee (size before relaxing)
+
+.debug_loc      0x00000000       0x76
+ *(.debug_loc)
+ .debug_loc     0x00000000       0x76 HID_EEPROM_Loader.o
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges   0x00000000       0x10
+ *(.debug_ranges)
+ .debug_ranges  0x00000000       0x10 HID_EEPROM_Loader.o
+
+.debug_macro
+ *(.debug_macro)
+OUTPUT(HID_EEPROM_Loader.elf elf32-avr)
+LOAD linker stubs
+
+Cross Reference Table
+
+Symbol                                            File
+__bad_interrupt                                   c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__eeupd_byte_m128                                 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eeupd_byte_atmega128.o)
+                                                  HID_EEPROM_Loader.o
+__eeupd_r18_m128                                  c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eeupd_byte_atmega128.o)
+__heap_end                                        c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__init                                            c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__stack                                           c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_1                                        c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_10                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_11                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_12                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_13                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_14                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_15                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_16                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_17                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_18                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_19                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_2                                        c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_20                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_21                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_22                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_23                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_24                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_25                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_26                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_27                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_28                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_29                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_3                                        c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_30                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_31                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_32                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_33                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_34                                       c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_4                                        c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_5                                        c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_6                                        c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_7                                        c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_8                                        c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_9                                        c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vector_default                                  c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+__vectors                                         c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+_binary_InputEEData_bin_end                       InputEEData.o
+_binary_InputEEData_bin_size                      InputEEData.o
+                                                  HID_EEPROM_Loader.o
+_binary_InputEEData_bin_start                     InputEEData.o
+                                                  HID_EEPROM_Loader.o
+_exit                                             c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+exit                                              c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+                                                  c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+main                                              HID_EEPROM_Loader.o
+                                                  c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.3.1005/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
