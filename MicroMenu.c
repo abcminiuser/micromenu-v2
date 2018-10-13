@@ -22,48 +22,47 @@ Menu_Item_t PROGMEM NULL_MENU = {0};
  *  if no menu-specific display function has been set
  *  in the select menu item.
  */
-static void (*MenuWriteFunc)(const char* Text) = NULL;
+static void (*MenuWriteFunc)(const char *Text) = NULL;
 
 /** \internal
  *  Pointer to the currently selected menu item.
  */
-static Menu_Item_t* CurrentMenuItem = &NULL_MENU;
+static Menu_Item_t *CurrentMenuItem = &NULL_MENU;
 
-
-Menu_Item_t* Menu_GetCurrentMenu(void)
+Menu_Item_t *Menu_GetCurrentMenu(void)
 {
-	return CurrentMenuItem;
+    return CurrentMenuItem;
 }
 
-void Menu_Navigate(Menu_Item_t* const NewMenu)
+void Menu_Navigate(Menu_Item_t *const NewMenu)
 {
-	if ((NewMenu == &NULL_MENU) || (NewMenu == NULL))
-		return;
+    if((NewMenu == &NULL_MENU) || (NewMenu == NULL))
+        return;
 
-	CurrentMenuItem = NewMenu;
+    CurrentMenuItem = NewMenu;
 
-	if (MenuWriteFunc)
-		MenuWriteFunc(CurrentMenuItem->Text);
+    if(MenuWriteFunc)
+        MenuWriteFunc(CurrentMenuItem->Text);
 
-	void (*SelectCallback)(void) = MENU_ITEM_READ_POINTER(&CurrentMenuItem->SelectCallback);
+    void (*SelectCallback)(void) = MENU_ITEM_READ_POINTER(&CurrentMenuItem->SelectCallback);
 
-	if (SelectCallback)
-		SelectCallback();
+    if(SelectCallback)
+        SelectCallback();
 }
 
-void Menu_SetGenericWriteCallback(void (*WriteFunc)(const char* Text))
+void Menu_SetGenericWriteCallback(void (*WriteFunc)(const char *Text))
 {
-	MenuWriteFunc = WriteFunc;
-	Menu_Navigate(CurrentMenuItem);
+    MenuWriteFunc = WriteFunc;
+    Menu_Navigate(CurrentMenuItem);
 }
 
 void Menu_EnterCurrentItem(void)
 {
-	if ((CurrentMenuItem == &NULL_MENU) || (CurrentMenuItem == NULL))
-		return;
+    if((CurrentMenuItem == &NULL_MENU) || (CurrentMenuItem == NULL))
+        return;
 
-	void (*EnterCallback)(void) = MENU_ITEM_READ_POINTER(&CurrentMenuItem->EnterCallback);
+    void (*EnterCallback)(void) = MENU_ITEM_READ_POINTER(&CurrentMenuItem->EnterCallback);
 
-	if (EnterCallback)
-		EnterCallback();
+    if(EnterCallback)
+        EnterCallback();
 }
