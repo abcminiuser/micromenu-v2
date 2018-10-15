@@ -59,10 +59,10 @@ typedef struct tag_Data_Item {
  */
 #ifndef MICRO_MENU_V3
 typedef const struct Menu_Item {
-    const struct Menu_Item *Next;     /**< Pointer to the next menu item of this menu item */
-    const struct Menu_Item *Previous; /**< Pointer to the previous menu item of this menu item */
-    const struct Menu_Item *Parent;   /**< Pointer to the parent menu item of this menu item */
-    const struct Menu_Item *Child;    /**< Pointer to the child menu item of this menu item */
+    /*const */struct Menu_Item *Next;     /**< Pointer to the next menu item of this menu item */
+    /*const */struct Menu_Item *Previous; /**< Pointer to the previous menu item of this menu item */
+    /*const */struct Menu_Item *Parent;   /**< Pointer to the parent menu item of this menu item */
+    /*const */struct Menu_Item *Child;    /**< Pointer to the child menu item of this menu item */
     void (*SelectCallback)(void);     /**< Pointer to the optional menu-specific select callback of this menu item */
     void (*EnterCallback)(void);      /**< Pointer to the optional menu-specific enter callback of this menu item */
     char Text[];                      /**< Menu item text to pass to the menu display callback function */
@@ -104,8 +104,10 @@ typedef struct tag_Menu_Item {
     void (*EnterCallback)(void);                     /**< Pointer to the optional menu-specific enter callback of this menu item */
     void (*RefreshCallback)(void);                   /**< Pointer to the optional menu-specific refresh data callback of this menu item */
     void (*EditCallback)(Menu_Item_t *, signed int); /**< Pointer to the optional menu-specific edit data callback of this menu item */
-    code const char * Text;                               /**< Menu item text to pass to the menu display callback function */
-    Data_Item_t *DataItem;
+    const char * Text;                               /**< Menu item text to pass to the menu display callback function */
+//    code const char * Text;                               /**< Menu item text to pass to the menu display callback function */
+//    const char Text[];                               /**< Menu item text to pass to the menu display callback function */
+    const Data_Item_t *DataItem;
 };
 #endif
 
@@ -126,14 +128,13 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
 *  \param[in] EnterFunc   Function callback to execute when the menu item is entered, or \c NULL for no callback.
 */
 #ifndef MICRO_MENU_V3
-/*
 #define MENU_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, Text) \
     extern Menu_Item_t MENU_ITEM_STORAGE Next;                                      \
     extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                  \
     extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                    \
     extern Menu_Item_t MENU_ITEM_STORAGE Child;                                     \
     Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, Text}
-*/
+/*
 #define MENU_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, Text) \
     extern Menu_Item_t MENU_ITEM_STORAGE Next;                                      \
     extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                  \
@@ -202,7 +203,8 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
 #define MENU_CURRENT (Menu_GetCurrentMenu())
 
 /** Null menu entry, used in \ref MENU_ITEM() definitions where no menu link is to be made. */
-extern Menu_Item_t MENU_ITEM_STORAGE NULL_MENU;
+//extern Menu_Item_t MENU_ITEM_STORAGE NULL_MENU;
+extern Menu_Item_t NULL_MENU;
 
 /** Retrieves the currently selected menu item.
  *

@@ -17,11 +17,11 @@
 #ifndef _MICRO_MENU_CONFIG_H_
 #define _MICRO_MENU_CONFIG_H_
 
-#if defined(__MIKROC_PRO_FOR_ARM__) // || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__) // || defined(__arm__)
+#if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__) // || defined(__arm__)
 #define MICRO_MENU_V3
 
 #ifdef MICRO_MENU_V3
-#define USE_DATA_RANGE
+//#define USE_DATA_RANGE
 #endif
 #endif
 
@@ -42,6 +42,7 @@
 #define MENU_ITEM_STORAGE const
 #elif defined(__MIKROC_PRO_FOR_AVR__)
 #define MENU_ITEM_STORAGE const
+//#define MENU_ITEM_STORAGE
 //#define MENU_ITEM_STORAGE flash
 //#define MENU_ITEM_STORAGE code const
 /*

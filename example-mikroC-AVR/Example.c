@@ -45,9 +45,9 @@ static void Level1Item1_Select(void)
  *
  *  \param[in] Text   Text of the selected menu to write, in \ref MENU_ITEM_STORAGE memory space
  */
-      code const char s0[] = "DEF";
+      /*const code */char s0[] = "DEF";
 
-static void Generic_Show(const Menu_Item_t *MenuItem)
+static void Generic_Show(Menu_Item_t *MenuItem)
 {
 
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
@@ -56,14 +56,19 @@ static void Generic_Show(const Menu_Item_t *MenuItem)
       char s[5];
       strcpy(s,"ABC");
       strcpy(s, s0);
-      strcpy(s, &s0);
+      strcpy(s, (char *)&s0[0]);
       strcpy(s, MenuItem->Text);
+      strcpy(s, (char *)MenuItem->Text);
+      strcpy(s, (char *)MenuItem->Text);
+        Lcd_Out(1, 1, "ASD");
+        Lcd_Out(1, 1, (char *)&s0[0]);
+        Lcd_Out(1, 1, s);
         Lcd_Out(1, 1, MenuItem->Text);
     }
 }
 
-MENU_ITEM(Menu_1, NULL_MENU, NULL_MENU, NULL_MENU, NULL_MENU, Level1Item1_Select, Level1Item1_Enter, "1))");
-//MENU_ITEM(Menu_2, NULL_MENU, NULL_MENU, NULL_MENU, NULL_MENU, Level1Item1_Select, Level1Item1_Enter, "2))");
+MENU_ITEM(Menu_1, NULL_MENU, NULL_MENU, NULL_MENU, NULL_MENU, NULL, NULL, NULL, NULL, "123");
+MENU_ITEM(Menu_2, NULL_MENU, NULL_MENU, NULL_MENU, NULL_MENU, NULL, NULL, NULL, NULL, "456");
 /*
 MENU_ITEM(Menu_1, Menu_2, Menu_3, NULL_MENU, Menu_1_1 , Level1Item1_Select, Level1Item1_Enter, "1)");
 MENU_ITEM(Menu_11, Menu_2, Menu_3, NULL_MENU, Menu_1_1 , Level1Item1_Select, Level1Item1_Enter, "1)");

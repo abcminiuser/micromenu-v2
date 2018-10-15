@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=Example.c
+Value=..\MicroMenu.cp
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -33,7 +33,7 @@ File2=..\MicroMenu.h
 File3=..\MicroMenu.c
 File4=Example.cp
 File5=example.lst
-File6=.\C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for AVR\include\stddef.h
+File6=..\MicroMenu.cp
 Count=7
 [EEPROM]
 Count=0
