@@ -189,9 +189,9 @@ void Menu_Navigate(const Menu_Item_t *NewMenu);
 *  \ref WriteFunc  Pointer to a callback function to execute for each selected menu item.
 */
 void Menu_SetGenericWriteCallback(void (*WriteFunc)(const char *Text));
-#ifdef MICRO_MENU_V3
 void Menu_SetGenericShowCallback(void (*ShowFunc)(const Menu_Item_t *MenuItem));
 
+#ifdef MICRO_MENU_V3
 void Menu_SetGenericShowSInt(void (*ShowFunc)(const Menu_Item_t *MenuItem));
 void Menu_SetGenericShowUInt(void (*ShowFunc)(const Menu_Item_t *MenuItem));
 void Menu_SetGenericShowBit(void (*ShowFunc)(const Menu_Item_t *MenuItem));

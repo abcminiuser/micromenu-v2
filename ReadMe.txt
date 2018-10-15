@@ -23,7 +23,15 @@ Added callback ShowFunc to display data.
 Added callback RefreshFunc to update output when data changes.
 Added callback EditFunc to edit data.
 
-MICRO-MENU tested with 
-    - MicroC PRO for ARM.
+MICRO-MENU tested with:
+    - MicroC PRO for ARM;
+    - MicroC PRO for AVR;
+    - MicroC PRO for PIC;
     - Atollic TrueSTUDIO for STM32(GNU Arm Embedded Toolchain).
 
+MICRO-MENU links:
+https://github.com/abcminiuser/micromenu-v2
+https://www.avrfreaks.net/projects/micromenu
+
+http://easyelectronics.ru/organizaciya-drevovidnogo-menyu.html
+https://stm32withoutfear.blogspot.com/2017/02/stm32-micromenu-2.html

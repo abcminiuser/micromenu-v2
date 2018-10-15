@@ -29,9 +29,9 @@ Menu_Item_t MENU_ITEM_STORAGE NULL_MENU = {0};
  *  in the select menu item.
  */
 static void (*MenuWriteFunc)(const char *Text) = NULL;
-#ifdef MICRO_MENU_V3
 static void (*MenuShowFunc)(const Menu_Item_t *MenuItem) = NULL;
 
+#ifdef MICRO_MENU_V3
 static void (*MenuShowBit)(const Menu_Item_t *MenuItem) = NULL;
 static void (*MenuShowSInt)(const Menu_Item_t *MenuItem) = NULL;
 static void (*MenuShowUInt)(const Menu_Item_t *MenuItem) = NULL;
@@ -81,13 +81,13 @@ void Menu_SetGenericWriteCallback(void (*WriteFunc)(const char *Text))
     Menu_Navigate(CurrentMenuItem);
 }
 
-#ifdef MICRO_MENU_V3
 void Menu_SetGenericShowCallback(void (*ShowFunc)(const Menu_Item_t *MenuItem))
 {
     MenuShowFunc = ShowFunc;
     Menu_Navigate(CurrentMenuItem);
 }
 
+#ifdef MICRO_MENU_V3
 void Menu_SetGenericShowSInt(void (*ShowFunc)(const Menu_Item_t *MenuItem))
 {
     MenuShowSInt = ShowFunc;

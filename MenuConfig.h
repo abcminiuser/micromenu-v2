@@ -17,7 +17,7 @@
 #ifndef _MICRO_MENU_CONFIG_H_
 #define _MICRO_MENU_CONFIG_H_
 
-#if defined(__MIKROC_PRO_FOR_ARM__) // || defined(__arm__)
+#if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__) // || defined(__arm__)
 #define MICRO_MENU_V3
 
 #ifdef MICRO_MENU_V3
@@ -38,7 +38,7 @@
  */
 #if defined(__AVR__)
 #define MENU_ITEM_STORAGE PROGMEM
-#elif defined(__MIKROC_PRO_FOR_ARM__)
+#elif defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__)
 #define MENU_ITEM_STORAGE const
 #elif defined(__arm__) // && defined(__GNUC__)
 #define MENU_ITEM_STORAGE const
@@ -53,7 +53,7 @@
  */
 #if defined(__AVR__)
 #define MENU_ITEM_READ_POINTER(Addr) (void *)pgm_read_word(Addr)
-#elif defined(__MIKROC_PRO_FOR_ARM__)
+#elif defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__)
 #define MENU_ITEM_READ_POINTER(Addr) *(Addr)
 #elif defined(__arm__) // && defined(__GNUC__)
 #define MENU_ITEM_READ_POINTER(Addr) *(Addr)
