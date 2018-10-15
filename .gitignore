@@ -1,1 +1,11 @@
 *.bak
+*.DBK
+*.cp
+*.dbg
+*.dct
+*.log
+*.dic
+*.dlt
+*.mcl
+*.lst
+TMP

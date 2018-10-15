@@ -17,7 +17,7 @@
 #ifndef _MICRO_MENU_CONFIG_H_
 #define _MICRO_MENU_CONFIG_H_
 
-#if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__) // || defined(__arm__)
+#if defined(__MIKROC_PRO_FOR_ARM__) // || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__) // || defined(__arm__)
 #define MICRO_MENU_V3
 
 #ifdef MICRO_MENU_V3
@@ -38,8 +38,33 @@
  */
 #if defined(__AVR__)
 #define MENU_ITEM_STORAGE PROGMEM
-#elif defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__)
+#elif defined(__MIKROC_PRO_FOR_ARM__)
 #define MENU_ITEM_STORAGE const
+#elif defined(__MIKROC_PRO_FOR_AVR__)
+#define MENU_ITEM_STORAGE const
+//#define MENU_ITEM_STORAGE flash
+//#define MENU_ITEM_STORAGE code const
+/*
+        //-----------------------
+        #define PGM_P                                   char flash *
+        #define PROGMEM                                 flash
+        #define const                                   flash
+        #define PSTR(x)                                 x
+
+        #define EEMEM                                   eeprom
+
+        #define pgm_read_byte(x)                        (*((uint8  flash *)(x)))
+        #define pgm_read_word(x)                        (*((uint16 flash *)(x)))
+        #define pgm_read_float(x)                       (*((uint32 flash *)(x)))
+        #define pgm_read_byte_near(x)                   (*((uint8  flash *)(x)))
+        //-----------------------
+#define PSTR(s) s
+#define pgm_read_byte(ptr) ((char)*(ptr))
+#define prog_char char
+#define PROGMEM
+//-------------------------------
+        
+*/
 #elif defined(__arm__) // && defined(__GNUC__)
 #define MENU_ITEM_STORAGE const
 #else

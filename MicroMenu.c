@@ -64,10 +64,8 @@ void Menu_Navigate(const Menu_Item_t *NewMenu)
     if(MenuWriteFunc)
         MenuWriteFunc(CurrentMenuItem->Text);
 
-#ifdef MICRO_MENU_V3
     if(MenuShowFunc)
         MenuShowFunc(CurrentMenuItem);
-#endif
 
     SelectCallback = MENU_ITEM_READ_POINTER(&CurrentMenuItem->SelectCallback);
 
