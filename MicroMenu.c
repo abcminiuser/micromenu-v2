@@ -133,8 +133,11 @@ void Menu_SetGenericEditFloat(void (*EditFunc)(const Menu_Item_t *MenuItem, sign
 void Menu_EnterCurrentItem(void)
 {
     void (*EnterCallback)(void);
-
+#if 0 // defined(__MIKROC_PRO_FOR_AVR__) // || defined(__MIKROC_PRO_FOR_PIC__)
     if((CurrentMenuItem == &NULL_MENU) || (CurrentMenuItem == NULL))
+#else
+    if((CurrentMenuItem == &NULL_MENU) || (CurrentMenuItem == NULL))
+#endif
         return;
 
     EnterCallback = MENU_ITEM_READ_POINTER(&CurrentMenuItem->EnterCallback);
@@ -149,7 +152,7 @@ void Menu_Refresh(const Menu_Item_t *MenuItem)
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
     if(MenuItem->RefreshCallback) {
-        MenuItem->RefreshCallback();
+        MenuItem->RefreshCallback(MenuItem);
     } else {
         switch(MenuItem->DataItem->DataType) {
             case MENU_TYPE: {

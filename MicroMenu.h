@@ -32,19 +32,19 @@ typedef enum MENU_DATA_TYPE_t {
 } MENU_DATA_TYPE;
 
 // Data range can be defined to edit the data.
-typedef struct tag_Data_MinMax Data_MinMax_t;
+//typedef struct tag_Data_MinMax Data_MinMax_t;
 
-typedef struct tag_Data_MinMax {
+typedef struct Data_MinMax {
     long long MinValue;
     long long MaxValue;
-} Data_MinMax;
+} Data_MinMax_t;
 
 // Structure to stote a data info.
-typedef struct tag_Data_Item Data_Item_t;
+//typedef struct tag_Data_Item Data_Item_t;
 
-typedef struct tag_Data_Item {
+typedef struct Data_Item {
     enum MENU_DATA_TYPE_t DataType;
-    const void *          DataPtr; // pointer to data
+    void *          DataPtr; // pointer to data
     union {
         unsigned short int Bit;  // bit number for BIT_TYPE
         unsigned short int Size; // or data size of variable with UNSIGNED_TYPE's, SIGNED_TYPE's, etc.
@@ -52,7 +52,7 @@ typedef struct tag_Data_Item {
 #ifdef USE_DATA_RANGE
     Data_MinMax_t *MinMax;
 #endif
-} Data_Item;
+} Data_Item_t;
 
 /** Type define for a menu item. Menu items should be initialized via the helper
  *  macro \ref MENU_ITEM(), not created from this type directly in user-code.
@@ -65,57 +65,36 @@ typedef const struct Menu_Item {
     const struct Menu_Item *Child;    /**< Pointer to the child menu item of this menu item */
     void (*SelectCallback)(void);     /**< Pointer to the optional menu-specific select callback of this menu item */
     void (*EnterCallback)(void);      /**< Pointer to the optional menu-specific enter callback of this menu item */
-    const char *Text;                 /**< Menu item text to pass to the menu display callback function */
-    //  char Text[];                           /**< Menu item text to pass to the menu display callback function */
+#if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__)
+    const char *Text; /**< Menu item text to pass to the menu display callback function */
+#else                 /**/
+    char Text[]; /**< Menu item text to pass to the menu display callback function */
+#endif
 } Menu_Item_t;
-
-/*
-typedef const struct {
-   const void       *Next;
-   const void       *Previous;
-   const void       *Parent;
-    char  Text[];
-   const void       *Sibling;
-//   FuncPtr     SelectFunc;
-//   FuncPtr     EnterFunc;
-} Menu_Item;
-*/
-
-/*
-typedef const struct {
-   void       *Next;
-   void       *Previous;
-   void       *Parent;
-   void       *Sibling;
-   FuncPtr     SelectFunc;
-   FuncPtr     EnterFunc;
-   const char  Text[];
-} Menu_Item;
-*/
-
 #else
-typedef struct tag_Menu_Item Menu_Item_t;
-
-typedef struct tag_Menu_Item {
-    const Menu_Item_t *Next;                         /**< Pointer to the next menu item of this menu item */
-    const Menu_Item_t *Previous;                     /**< Pointer to the previous menu item of this menu item */
-    const Menu_Item_t *Parent;                       /**< Pointer to the parent menu item of this menu item */
-    const Menu_Item_t *Child;                        /**< Pointer to the child menu item of this menu item */
-    void (*SelectCallback)(void);                    /**< Pointer to the optional menu-specific select callback of this menu item */
-    void (*EnterCallback)(void);                     /**< Pointer to the optional menu-specific enter callback of this menu item */
-    void (*RefreshCallback)(void);                   /**< Pointer to the optional menu-specific refresh data callback of this menu item */
-    void (*EditCallback)(Menu_Item_t *, signed int); /**< Pointer to the optional menu-specific edit data callback of this menu item */
-    const char *Text;                                /**< Menu item text to pass to the menu display callback function */
-    //    code const char * Text;                               /**< Menu item text to pass to the menu display callback function */
-    //const char Text[];                               /**< Menu item text to pass to the menu display callback function */
+typedef const struct Menu_Item {
+    const struct Menu_Item *Next;                      /**< Pointer to the next menu item of this menu item */
+    const struct Menu_Item *Previous;                  /**< Pointer to the previous menu item of this menu item */
+    const struct Menu_Item *Parent;                    /**< Pointer to the parent menu item of this menu item */
+    const struct Menu_Item *Child;                     /**< Pointer to the child menu item of this menu item */
+    void (*SelectCallback)(void);                      /**< Pointer to the optional menu-specific select callback of this menu item */
+    void (*EnterCallback)(void);                       /**< Pointer to the optional menu-specific enter callback of this menu item */
+    void (*RefreshCallback)(const struct Menu_Item *); /**< Pointer to the optional menu-specific refresh data callback of this menu item */
+    void (*EditCallback)(const struct Menu_Item *,
+                         signed int); /**< Pointer to the optional menu-specific edit data callback of this menu item */
+#if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__)
+    const char *       Text;          /**< Menu item text to pass to the menu display callback function */
+#else /**/
+    char Text[]; /**< Menu item text to pass to the menu display callback function */
+#endif
     const Data_Item_t *DataItem;
-};
+} Menu_Item_t;
 #endif
 
 // Typedefs for Callback functions
-typedef void (*FuncPtr)(void);                                        // SelectCallback, EnterCallback, RefreshCallback
+typedef void (*FuncPtr)(void);                                        // SelectCallback, EnterCallback
 typedef void (*WriteFunc)(const char *Text);                          // WriteCallback
-typedef void (*ShowFunc)(const Menu_Item_t *MenuItem);                // ShowCallback, ShowBit, ShowSInt, ShowUInt, etc.
+typedef void (*ShowFunc)(const Menu_Item_t *MenuItem);                // RefreshCallback, ShowCallback, ShowBit, ShowSInt, ShowUInt, etc.
 typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCallback, EditBit, EditInt, etc.
 
 /** Creates a new menu item entry with the specified links and callbacks.
@@ -143,7 +122,7 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
     extern Menu_Item_t MENU_ITEM_STORAGE Child;                                     \
     MENU_ITEM_STORAGE char Text_##Name[] =  Text;                                                                     \
     Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, Text_##Name}
-/**/
+*/
 #else
 #define MENU_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text) \
     extern Menu_Item_t MENU_ITEM_STORAGE Next;                                                             \
@@ -157,7 +136,7 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
     extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                                                                    \
     extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                                                      \
     extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                                                       \
-    extern Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit};                                                  \
+    Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit};                                                  \
     Menu_Item_t MENU_ITEM_STORAGE Name = {                                                                                            \
         &Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &Data_##Name}
 
