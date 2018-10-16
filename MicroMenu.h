@@ -32,7 +32,7 @@ typedef enum MENU_DATA_TYPE_t {
 } MENU_DATA_TYPE;
 
 // Data range can be defined to edit the data.
-typedef struct tag_Data_MinMAx Data_MinMax_t;
+typedef struct tag_Data_MinMax Data_MinMax_t;
 
 typedef struct tag_Data_MinMax {
     long long MinValue;
@@ -59,13 +59,14 @@ typedef struct tag_Data_Item {
  */
 #ifndef MICRO_MENU_V3
 typedef const struct Menu_Item {
-    /*const */struct Menu_Item *Next;     /**< Pointer to the next menu item of this menu item */
-    /*const */struct Menu_Item *Previous; /**< Pointer to the previous menu item of this menu item */
-    /*const */struct Menu_Item *Parent;   /**< Pointer to the parent menu item of this menu item */
-    /*const */struct Menu_Item *Child;    /**< Pointer to the child menu item of this menu item */
+    const struct Menu_Item *Next;     /**< Pointer to the next menu item of this menu item */
+    const struct Menu_Item *Previous; /**< Pointer to the previous menu item of this menu item */
+    const struct Menu_Item *Parent;   /**< Pointer to the parent menu item of this menu item */
+    const struct Menu_Item *Child;    /**< Pointer to the child menu item of this menu item */
     void (*SelectCallback)(void);     /**< Pointer to the optional menu-specific select callback of this menu item */
     void (*EnterCallback)(void);      /**< Pointer to the optional menu-specific enter callback of this menu item */
-    char Text[];                      /**< Menu item text to pass to the menu display callback function */
+    const char *Text;                 /**< Menu item text to pass to the menu display callback function */
+    //  char Text[];                           /**< Menu item text to pass to the menu display callback function */
 } Menu_Item_t;
 
 /*
@@ -104,9 +105,9 @@ typedef struct tag_Menu_Item {
     void (*EnterCallback)(void);                     /**< Pointer to the optional menu-specific enter callback of this menu item */
     void (*RefreshCallback)(void);                   /**< Pointer to the optional menu-specific refresh data callback of this menu item */
     void (*EditCallback)(Menu_Item_t *, signed int); /**< Pointer to the optional menu-specific edit data callback of this menu item */
-    const char * Text;                               /**< Menu item text to pass to the menu display callback function */
-//    code const char * Text;                               /**< Menu item text to pass to the menu display callback function */
-//    const char Text[];                               /**< Menu item text to pass to the menu display callback function */
+    const char *Text;                                /**< Menu item text to pass to the menu display callback function */
+    //    code const char * Text;                               /**< Menu item text to pass to the menu display callback function */
+    //const char Text[];                               /**< Menu item text to pass to the menu display callback function */
     const Data_Item_t *DataItem;
 };
 #endif
@@ -203,8 +204,7 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
 #define MENU_CURRENT (Menu_GetCurrentMenu())
 
 /** Null menu entry, used in \ref MENU_ITEM() definitions where no menu link is to be made. */
-//extern Menu_Item_t MENU_ITEM_STORAGE NULL_MENU;
-extern Menu_Item_t NULL_MENU;
+extern Menu_Item_t MENU_ITEM_STORAGE NULL_MENU;
 
 /** Retrieves the currently selected menu item.
  *

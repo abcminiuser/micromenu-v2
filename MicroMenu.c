@@ -8,9 +8,9 @@
         Royalty-free for all uses.
 
 
-                  MICRO-MENU V3
+              MICRO-MENU V3
 
-              (C) Ihor Nehrutsa, 2018
+          (C) Ihor Nehrutsa, 2018
           LDmicro.GitHub@gmail.com
                                       */
 
@@ -20,8 +20,7 @@
  *  a \ref MENU_ITEM() definition, i.e. to indicate that a
  *  menu has no linked parent, child, next or previous entry.
  */
-//MENU_ITEM_STORAGE Menu_Item_t NULL_MENU = {0};
-Menu_Item_t NULL_MENU = {0};
+Menu_Item_t MENU_ITEM_STORAGE NULL_MENU = {0};
 
 /** \internal
  *  Pointer to the generic menu text display function
@@ -53,7 +52,7 @@ Menu_Item_t *Menu_GetCurrentMenu(void)
     return CurrentMenuItem;
 }
 
-void Menu_Navigate(Menu_Item_t *NewMenu)
+void Menu_Navigate(const Menu_Item_t *NewMenu)
 {
     void (*SelectCallback)(void);
 
@@ -145,7 +144,7 @@ void Menu_EnterCurrentItem(void)
 }
 
 #ifdef MICRO_MENU_V3
-void Menu_Refresh(Menu_Item_t *MenuItem)
+void Menu_Refresh(const Menu_Item_t *MenuItem)
 {
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
@@ -183,7 +182,7 @@ void Menu_Refresh(Menu_Item_t *MenuItem)
     }
 }
 
-static void Generic_EditBit(Menu_Item_t *MenuItem, signed int Dir)
+static void Generic_EditBit(const Menu_Item_t *MenuItem, signed int Dir)
 {
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
@@ -213,18 +212,18 @@ static void Generic_EditBit(Menu_Item_t *MenuItem, signed int Dir)
 
 #define EDIT(type_prefix)                                                                                    \
     if(Dir > 0) {                                                                                            \
-        if((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMAx->MaxValue) \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMAx->MaxValue;        \
+        if((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue) \
+            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;        \
         else                                                                                                 \
             *(type_prefix int *)(MenuItem->DataItem->DataPtr) += Dir;                                        \
     } else if(Dir < 0) {                                                                                     \
-        if((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMAx->MinValue) \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMAx->MinValue;        \
+        if((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue) \
+            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;        \
         else                                                                                                 \
             *(type_prefix int *)(MenuItem->DataItem->DataPtr) += Dir;                                        \
     }
 
-static void Generic_EditInt(Menu_Item_t *MenuItem, signed int Dir)
+static void Generic_EditInt(const Menu_Item_t *MenuItem, signed int Dir)
 {
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
@@ -270,7 +269,7 @@ static void Generic_EditInt(Menu_Item_t *MenuItem, signed int Dir)
     }
 }
 
-static void Generic_EditFloat(Menu_Item_t *MenuItem, signed int Dir)
+static void Generic_EditFloat(const Menu_Item_t *MenuItem, signed int Dir)
 {
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
@@ -294,7 +293,7 @@ static void Generic_EditFloat(Menu_Item_t *MenuItem, signed int Dir)
     }
 }
 
-void Menu_Edit(Menu_Item_t *MenuItem, signed int Dir)
+void Menu_Edit(const Menu_Item_t *MenuItem, signed int Dir)
 {
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;

@@ -4,7 +4,7 @@
           (C) Dean Camera, 2012
         www.fourwalledcubicle.com
      dean [at] fourwalledcubicle.com
-	
+
         Royalty-free for all uses.
 
 
@@ -21,7 +21,7 @@
 #define MICRO_MENU_V3
 
 #ifdef MICRO_MENU_V3
-//#define USE_DATA_RANGE
+#define USE_DATA_RANGE
 #endif
 #endif
 
@@ -64,7 +64,6 @@
 #define prog_char char
 #define PROGMEM
 //-------------------------------
-        
 */
 #elif defined(__arm__) // && defined(__GNUC__)
 #define MENU_ITEM_STORAGE const
