@@ -1,5 +1,6 @@
 /**
               MICRO-MENU V2
+              https://github.com/abcminiuser/micromenu-v2
 
           (C) Dean Camera, 2012
         www.fourwalledcubicle.com
@@ -9,6 +10,7 @@
 
 
               MICRO-MENU V3
+              https://github.com/LDmicroGitHub/micromenu-v2
 
           (C) Ihor Nehrutsa, 2018
           LDmicro.GitHub@gmail.com
@@ -19,9 +21,12 @@
 
 #if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__) // || defined(__arm__)
 #define MICRO_MENU_V3
+#endif
 
 #ifdef MICRO_MENU_V3
-#define USE_DATA_RANGE
+#define USE_DATA
+#ifdef USE_DATA
+//#define USE_DATA_RANGE
 #endif
 #endif
 

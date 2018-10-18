@@ -1,14 +1,14 @@
 #include "MicroMenu.h"
 
-#define DISP_LEN 16
 #define DEBOUNCE_MS 150
+#define DISP_LEN 16
 
 enum ButtonValues { BUTTON_NONE, 
-                    BUTTON_PARENT, 
-                    BUTTON_PREVIOUS, 
-                    BUTTON_NEXT, 
-                    BUTTON_PLUS, 
-                    BUTTON_MINUS, 
+                    BUTTON_PARENT,
+                    BUTTON_PREVIOUS,
+                    BUTTON_NEXT,
+                    BUTTON_PLUS,
+                    BUTTON_MINUS,
                     BUTTON_CHILD };
 
 enum ButtonValues GetButtonPress(void)
@@ -56,27 +56,27 @@ char *strcpy_const(char *dest, const char *src)
 /** Example menu item specific enter callback function, run when the associated menu item is entered. */
 static void M_1_Enter(void)
 {
-    //                 12345678
-    Lcd_Out(1, 9, " ENTER  ");
+    Lcd_Out(1, 1, "ENTER           ");
 }
 
 /** Example menu item specific select callback function, run when the associated menu item is selected. */
 static void M_1_Select(void)
 {
-    Lcd_Out(1, 9, " SELECT ");
+    Lcd_Out(1, 1, "SELECT          ");
 }
 
 static int  i = -20;
 static void M_21_Refresh(const Menu_Item_t *MenuItem)
 {
-    char s[DISP_LEN+1];
+    char s1[20];
+    char s2[20];
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
-    if(MenuItem->Text && (*MenuItem->Text)) {
-//      Lcd_Out_const(1, 1, MenuItem->Text);
+    if(MenuItem->Text /* && *MenuItem->Text*/) {
+        strcpy_const(s1, MenuItem->Text);
+        sprinti(s2, "%s i=%d ", s1, i);
+        Lcd_Out(1, 1, s2);
     }
-    sprinti(s, "i=%6d", i);
-    Lcd_Out(1, 9, s);
     i++;
 }
 
@@ -101,33 +101,30 @@ static void Generic_Show(const Menu_Item_t *MenuItem)
     }
 }
 
-#ifdef MICRO_MENU_V3
 static void GenericShowSInt(const Menu_Item_t *MenuItem)
 {
     char s[DISP_LEN];
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
-    if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
-        return;
     if(MenuItem->DataItem)
         if(MenuItem->DataItem->DataPtr) {
             switch(MenuItem->DataItem->Size) {
                 case 1:
-                    sprinti(s, "%4d", *(signed short int *)MenuItem->DataItem->DataPtr);
+                    sprinti(s, "    %4d ", *(signed short int *)MenuItem->DataItem->DataPtr);
                     break;
                 case 2:
-                    sprinti(s, "%4d", *(signed int *)MenuItem->DataItem->DataPtr);
+                    sprinti(s, "  %6d ", *(signed int *)MenuItem->DataItem->DataPtr);
                     break;
                 case 4:
-                    sprintl(s, "%4d", *(signed long int *)MenuItem->DataItem->DataPtr);
+                    sprintl(s, "%8d ", *(signed long int *)MenuItem->DataItem->DataPtr);
                     break;
                 case 8:
-                    sprintl(s, "%4d", *(signed long long int *)MenuItem->DataItem->DataPtr);
+                    sprintl(s, "%8d ", *(signed long long int *)MenuItem->DataItem->DataPtr);
                     break;
                 default:
                     break;
             }
-            Lcd_Out(1, 13, s);
+            Lcd_Out(1, 1, s);
         }
 }
 
@@ -136,27 +133,25 @@ static void GenericShowUInt(const Menu_Item_t *MenuItem)
     char s[DISP_LEN];
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
-    if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
-        return;
 
     if(MenuItem->DataItem->DataPtr) {
         switch(MenuItem->DataItem->Size) {
             case 1:
-                sprinti(s, "%4u", *(unsigned short int *)(MenuItem->DataItem->DataPtr));
+                sprinti(s, " %8u ", *(unsigned short int *)(MenuItem->DataItem->DataPtr));
                 break;
             case 2:
-                sprinti(s, "%4u", *(unsigned int *)(MenuItem->DataItem->DataPtr));
+                sprinti(s, " %8u ", *(unsigned int *)(MenuItem->DataItem->DataPtr));
                 break;
             case 4:
-                sprintl(s, "%4u", *(unsigned long int *)(MenuItem->DataItem->DataPtr));
+                sprintl(s, " %8u ", *(unsigned long int *)(MenuItem->DataItem->DataPtr));
                 break;
             case 8:
-                sprintl(s, "%4u", *(unsigned long long int *)(MenuItem->DataItem->DataPtr));
+                sprintl(s, " %8u ", *(unsigned long long int *)(MenuItem->DataItem->DataPtr));
                 break;
             default:
                 break;
         }
-        Lcd_Out(1, 13, s);
+        Lcd_Out(1, 1, s);
     }
 }
 
@@ -166,8 +161,6 @@ static void GenericShowBit(const Menu_Item_t *MenuItem)
     bit  b;
     b = 0;
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
-        return;
-    if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
         return;
 
     if(MenuItem->DataItem->DataPtr) {
@@ -187,25 +180,24 @@ static void GenericShowBit(const Menu_Item_t *MenuItem)
         }
         s[0] = b ? '1' : '0';
         s[1] = 0;
-        Lcd_Out(1, DISP_LEN - 1, s);
+//      Lcd_Chr(1, DISP_LEN-5, s[0]);
+        Lcd_Out(1, DISP_LEN-5, s);
     }
 }
-#endif
 
 // clang-format off
 #ifndef MICRO_MENU_V3
-//        Name,   Next,   Previous, Parent,  Child,     SelectFunc, EnterFunc,  Text567890123456
-MENU_ITEM(Menu_1, Menu_2, Menu_2, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 1.         ");
-MENU_ITEM(Menu_2, Menu_1, Menu_1, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 2.         ");
+MENU_ITEM(Menu_1, Menu_2, Menu_2, NULL_MENU, NULL_MENU, NULL, NULL, "Menu 1. ");
+MENU_ITEM(Menu_2, Menu_1, Menu_1, NULL_MENU, NULL_MENU, NULL, NULL, "Menu 2. ");
 #else
-//        Name,    Next,      Previous,  Parent,    Child,     SelectFunc, EnterFunc, RefreshFunc,  EditFunc,   Text567890123456,  DataType,      Data,  SizeOrBit
-MENU_ITEM(Menu_1,  Menu_2,    Menu_3,    NULL_MENU, NULL_MENU, M_1_Select, M_1_Enter, NULL,         NULL,      "Menu 1          ");
-MENU_ITEM(Menu_2,  Menu_3,    Menu_1,    NULL_MENU, Menu_21,   NULL,       NULL,      NULL,         NULL,      "Menu 2          ");
-MENU_ITEM(Menu_21, NULL_MENU, NULL_MENU, Menu_2,    NULL_MENU, NULL,       NULL,      M_21_Refresh, NULL,      "Menu 21         ");
-MENU_ITEM(Menu_3,  Menu_1,    Menu_2,    NULL_MENU, Menu_31,   NULL,       NULL,      NULL,         NULL,      "Menu 3          ");
-DATA_ITEM(Menu_31, Menu_32,   Menu_33,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit bit        ", BIT_TYPE,      PORTA, 0);
-DATA_ITEM(Menu_32, Menu_33,   Menu_31,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit signed     ", SIGNED_TYPE,   PORTE, 1);
-DATA_ITEM(Menu_33, Menu_31,   Menu_32,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit unsigned   ", UNSIGNED_TYPE, PORTE, 1);
+//        Name,    Next,      Previous,  Parent,    Child,     SelectFunc, EnterFunc, RefreshFunc,  EditFunc,  Text5678,  DataType,      Data,      SizeOrBit
+MENU_ITEM(Menu_1,  Menu_2,    Menu_3,    NULL_MENU, NULL_MENU, M_1_Select, M_1_Enter, NULL,         NULL,      "Menu 1 ");
+MENU_ITEM(Menu_2,  Menu_3,    Menu_1,    NULL_MENU, Menu_21,   NULL,       NULL,      NULL,         NULL,      "Menu 2 ");
+MENU_ITEM(Menu_21, NULL_MENU, NULL_MENU, Menu_2,    NULL_MENU, NULL,       NULL,      M_21_Refresh, NULL,      "Menu 21 ");
+MENU_ITEM(Menu_3,  Menu_1,    Menu_2,    NULL_MENU, Menu_31,   NULL,       NULL,      NULL,         NULL,      "Menu 3 ");
+DATA_ITEM(Menu_31, Menu_32,   Menu_33,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit bit ", BIT_TYPE, PORTA, 0);
+DATA_ITEM(Menu_32, Menu_33,   Menu_31,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit signed ", SIGNED_TYPE, PORTE, 1);
+DATA_ITEM(Menu_33, Menu_31,   Menu_32,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit unsigned ", UNSIGNED_TYPE, PORTE, 1);
 #endif
 // clang-format on
 
@@ -227,9 +219,8 @@ sbit LCD_D4_Direction at DDD7_bit;
 
 int main(void)
 {
-    DDRA.B0 = 1; // Set PORTA.0 pin as output
-    
-    DDRE = 0xFF; // Set PORTE pins as outputs
+    DDRA.B0 = 1;  // Set PORTA.0 pin as output
+    DDRE = 0xFF;  // Set PORTE pins as outputs
 
     DDRB = 0;     // Set PORTB pins as inputs
     PORTB = 0xff; // Pull ups ON
@@ -245,12 +236,10 @@ int main(void)
 #else
     Menu_SetGenericShowCallback(Generic_Show);
 #endif
-#ifdef MICRO_MENU_V3
     Menu_SetGenericShowSInt(GenericShowSInt);
     Menu_SetGenericShowUInt(GenericShowUInt);
     Menu_SetGenericShowBit(GenericShowBit);
-#endif
-    Menu_Navigate(&Menu_1);
+    Menu_Navigate(&Menu_32);
 
     while(1) {
         /* Example usage of MicroMenu - here you can create your custom menu navigation system; you may wish to perform
@@ -263,6 +252,12 @@ int main(void)
             case BUTTON_NEXT:
                 Menu_Navigate(MENU_NEXT);
                 break;
+            case BUTTON_PLUS:
+                Menu_Edit(MENU_CURRENT, +1);
+                break;
+            case BUTTON_MINUS:
+                Menu_Edit(MENU_CURRENT, -1);
+                break;
             case BUTTON_CHILD:
                 Menu_Navigate(MENU_CHILD);
                 Menu_EnterCurrentItem();
@@ -270,17 +265,9 @@ int main(void)
             case BUTTON_PARENT:
                 Menu_Navigate(MENU_PARENT);
                 break;
-#ifdef MICRO_MENU_V3
-            case BUTTON_PLUS:
-                Menu_Edit(MENU_CURRENT, +1);
-                break;
-            case BUTTON_MINUS:
-                Menu_Edit(MENU_CURRENT, -1);
-                break;
             default:
                 Menu_Refresh(MENU_CURRENT);
                 break;
-#endif
         }
     }
     return 0;

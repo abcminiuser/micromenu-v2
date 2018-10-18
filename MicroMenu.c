@@ -1,5 +1,6 @@
 /**
               MICRO-MENU V2
+              https://github.com/abcminiuser/micromenu-v2
 
           (C) Dean Camera, 2012
         www.fourwalledcubicle.com
@@ -9,6 +10,7 @@
 
 
               MICRO-MENU V3
+              https://github.com/LDmicroGitHub/micromenu-v2
 
           (C) Ihor Nehrutsa, 2018
           LDmicro.GitHub@gmail.com
@@ -21,6 +23,7 @@
  *  menu has no linked parent, child, next or previous entry.
  */
 Menu_Item_t MENU_ITEM_STORAGE NULL_MENU = {0};
+Data_Item_t MENU_ITEM_STORAGE NULL_DATA = {0};
 
 /** \internal
  *  Pointer to the generic menu text display function
@@ -138,7 +141,7 @@ void Menu_EnterCurrentItem(void)
 #else
     if((CurrentMenuItem == &NULL_MENU) || (CurrentMenuItem == NULL))
 #endif
-        return;
+    return;
 
     EnterCallback = MENU_ITEM_READ_POINTER(&CurrentMenuItem->EnterCallback);
 
@@ -154,33 +157,29 @@ void Menu_Refresh(const Menu_Item_t *MenuItem)
     if(MenuItem->RefreshCallback) {
         MenuItem->RefreshCallback(MenuItem);
     } else {
+        if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
+            return;
         switch(MenuItem->DataItem->DataType) {
-            case MENU_TYPE: {
+            case MENU_TYPE:
                 break;
-            }
-            case BIT_TYPE: {
+            case BIT_TYPE:
                 if(MenuShowBit)
                     MenuShowBit(MenuItem);
                 break;
-            }
-            case UNSIGNED_TYPE: {
+            case UNSIGNED_TYPE:
                 if(MenuShowUInt)
                     MenuShowUInt(MenuItem);
                 break;
-            }
-            case SIGNED_TYPE: {
+            case SIGNED_TYPE:
                 if(MenuShowSInt)
                     MenuShowSInt(MenuItem);
                 break;
-            }
-            case FLOAT_TYPE: {
+            case FLOAT_TYPE:
                 if(MenuShowFloat)
                     MenuShowFloat(MenuItem);
                 break;
-            }
-            default: {
+            default:
                 break;
-            }
         }
     }
 }
@@ -193,6 +192,8 @@ static void Generic_EditBit(const Menu_Item_t *MenuItem, signed int Dir)
     if(MenuEditBit) {
         MenuEditBit(MenuItem, Dir);
     } else {
+        if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
+            return;
         if(MenuItem->DataItem->DataPtr) {
             if((MenuItem->DataItem->Bit >= 0) && (MenuItem->DataItem->Bit <= 7)) {
                 (*(unsigned short int *)MenuItem->DataItem->DataPtr) ^= (1 << MenuItem->DataItem->Bit);
@@ -207,23 +208,26 @@ static void Generic_EditBit(const Menu_Item_t *MenuItem, signed int Dir)
                 (*(unsigned long long int *)MenuItem->DataItem->DataPtr) ^= (1 << MenuItem->DataItem->Bit);
 
             } else {
-                // ???
             }
         }
     }
 }
 
-#define EDIT(type_prefix)                                                                                    \
-    if(Dir > 0) {                                                                                            \
-        if((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue) \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;        \
-        else                                                                                                 \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) += Dir;                                        \
-    } else if(Dir < 0) {                                                                                     \
-        if((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue) \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;        \
-        else                                                                                                 \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) += Dir;                                        \
+#define EDIT(type_prefix)                                                                                                                           \
+    if(Dir > 0) {                                                                                                                                   \
+        if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue))      \
+            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                                               \
+        else if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue)) \
+            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                                               \
+        else                                                                                                                                        \
+            *(type_prefix int *)(MenuItem->DataItem->DataPtr) += Dir;                                                                               \
+    } else if(Dir < 0) {                                                                                                                            \
+        if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue))      \
+            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                                               \
+        else if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue)) \
+            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                                               \
+        else                                                                                                                                        \
+            *(type_prefix int *)(MenuItem->DataItem->DataPtr) += Dir;                                                                               \
     }
 
 static void Generic_EditInt(const Menu_Item_t *MenuItem, signed int Dir)
@@ -234,38 +238,39 @@ static void Generic_EditInt(const Menu_Item_t *MenuItem, signed int Dir)
     if(MenuEditInt) {
         MenuEditInt(MenuItem, Dir);
     } else {
+        if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
+            return;
         if(MenuItem->DataItem->DataPtr) {
             switch(MenuItem->DataItem->Size) {
                 case 1:
 #ifdef USE_DATA_RANGE
                     EDIT(signed short)
 #else
-                    *(signed short int *)(MenuItem->DataItem->DataPtr) += Dir;
+                    (*(signed short int *)(MenuItem->DataItem->DataPtr)) += Dir;
 #endif
                     break;
                 case 2:
 #ifdef USE_DATA_RANGE
                     EDIT(signed)
 #else
-                    *(signed int *)(MenuItem->DataItem->DataPtr) += Dir;
+                    (*(signed int *)(MenuItem->DataItem->DataPtr)) += Dir;
 #endif
                     break;
                 case 4:
 #ifdef USE_DATA_RANGE
                     EDIT(signed long)
 #else
-                    *(signed long int *)(MenuItem->DataItem->DataPtr) += Dir;
+                    (*(signed long int *)(MenuItem->DataItem->DataPtr)) += Dir;
 #endif
                     break;
                 case 8:
 #ifdef USE_DATA_RANGE
                     EDIT(signed long long)
 #else
-                    *(signed long long int *)(MenuItem->DataItem->DataPtr) += Dir;
+                    (*(signed long long int *)(MenuItem->DataItem->DataPtr)) += Dir;
 #endif
                     break;
                 default:
-                    //???
                     break;
             }
         }
@@ -280,6 +285,8 @@ static void Generic_EditFloat(const Menu_Item_t *MenuItem, signed int Dir)
     if(MenuEditFloat) {
         MenuEditFloat(MenuItem, Dir);
     } else {
+        if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
+            return;
         if(MenuItem->DataItem->DataPtr) {
             switch(MenuItem->DataItem->Size) {
                 case 4:
@@ -289,7 +296,6 @@ static void Generic_EditFloat(const Menu_Item_t *MenuItem, signed int Dir)
                     *(long double *)(MenuItem->DataItem->DataPtr) = *(long double *)(MenuItem->DataItem->DataPtr) + Dir;
                     break;
                 default:
-                    //???
                     break;
             }
         }
@@ -305,28 +311,22 @@ void Menu_Edit(const Menu_Item_t *MenuItem, signed int Dir)
         MenuItem->EditCallback(MenuItem, Dir);
     } else {
         switch(MenuItem->DataItem->DataType) {
-            case MENU_TYPE: {
+            case MENU_TYPE:
                 break;
-            }
-            case BIT_TYPE: {
+            case BIT_TYPE:
                 Generic_EditBit(MenuItem, Dir);
                 break;
-            }
-            case UNSIGNED_TYPE: {
+            case UNSIGNED_TYPE:
                 Generic_EditInt(MenuItem, Dir);
                 break;
-            }
-            case SIGNED_TYPE: {
+            case SIGNED_TYPE:
                 Generic_EditInt(MenuItem, Dir);
                 break;
-            }
-            case FLOAT_TYPE: {
+            case FLOAT_TYPE:
                 Generic_EditFloat(MenuItem, Dir);
                 break;
-            }
-            default: {
+            default:
                 break;
-            }
         }
     }
 }

@@ -1,9 +1,11 @@
-	           MICRO-MENU V2
+              MICRO-MENU V2
+              https://github.com/abcminiuser/micromenu-v2
 
-	     (C) Dean Camera, 2012
-	    www.fourwalledcubicle.com
-	
-	    Royalty-free for all uses.
+          (C) Dean Camera, 2012
+        www.fourwalledcubicle.com
+     dean [at] fourwalledcubicle.com
+
+        Royalty-free for all uses.
 
 This is the second iteration of my original "MicroMenu" project, a tiny, royalty free library for the easy creation of menus within an embedded system. Menus can be stored completely in flash memory if desired, saving precious SRAM.
 
@@ -12,9 +14,11 @@ The new version of MicroMenu has increased type safety, a better example and an 
 
 
 
-	           MICRO-MENU V3
+              MICRO-MENU V3
+              https://github.com/LDmicroGitHub/micromenu-v2
 
-	     (C) Ihor Nehrutsa, 2018
+          (C) Ihor Nehrutsa, 2018
+          LDmicro.GitHub@gmail.com
 
 V3.0
 Added a data container to the menu.
@@ -30,7 +34,6 @@ MICRO-MENU tested with:
     - Atollic TrueSTUDIO for STM32(GNU Arm Embedded Toolchain).
 
 MICRO-MENU links:
-https://github.com/abcminiuser/micromenu-v2
 https://www.avrfreaks.net/projects/micromenu
 
 http://easyelectronics.ru/organizaciya-drevovidnogo-menyu.html

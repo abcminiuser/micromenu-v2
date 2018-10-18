@@ -3,29 +3,29 @@
 #define DISP_LEN 16
 #define DEBOUNCE_MS 150
 
-enum ButtonValues { BUTTON_NONE, 
-                    BUTTON_PARENT, 
-                    BUTTON_PREVIOUS, 
-                    BUTTON_NEXT, 
-                    BUTTON_PLUS, 
-                    BUTTON_MINUS, 
+enum ButtonValues { BUTTON_NONE,
+                    BUTTON_PARENT,
+                    BUTTON_PREVIOUS,
+                    BUTTON_NEXT,
+                    BUTTON_PLUS,
+                    BUTTON_MINUS,
                     BUTTON_CHILD };
 
 enum ButtonValues GetButtonPress(void)
 {
     //return BUTTON_NONE;
     //return BUTTON_NEXT;
-    if(Button(&PINB, 0, DEBOUNCE_MS, 0))
+    if(Button(&PORTB, 0, DEBOUNCE_MS, 0))
         return BUTTON_PARENT;
-    else if(Button(&PINB, 1, DEBOUNCE_MS, 0))
+    else if(Button(&PORTB, 1, DEBOUNCE_MS, 0))
         return BUTTON_PREVIOUS;
-    else if(Button(&PINB, 2, DEBOUNCE_MS, 0))
+    else if(Button(&PORTB, 2, DEBOUNCE_MS, 0))
         return BUTTON_NEXT;
-    else if(Button(&PINB, 3, DEBOUNCE_MS, 0))
+    else if(Button(&PORTB, 3, DEBOUNCE_MS, 0))
         return BUTTON_CHILD;
-    else if(Button(&PINB, 4, DEBOUNCE_MS, 0))
+    else if(Button(&PORTB, 4, DEBOUNCE_MS, 0))
         return BUTTON_MINUS;
-    else if(Button(&PINB, 5, DEBOUNCE_MS, 0))
+    else if(Button(&PORTB, 5, DEBOUNCE_MS, 0))
         return BUTTON_PLUS;
     return BUTTON_NONE;
 }
@@ -56,14 +56,14 @@ char *strcpy_const(char *dest, const char *src)
 /** Example menu item specific enter callback function, run when the associated menu item is entered. */
 static void M_1_Enter(void)
 {
-    //                 12345678
-    Lcd_Out(1, 9, " ENTER  ");
+//                 12345678
+    Lcd_Out(1, 9, "ENTER   ");
 }
 
 /** Example menu item specific select callback function, run when the associated menu item is selected. */
 static void M_1_Select(void)
 {
-    Lcd_Out(1, 9, " SELECT ");
+    Lcd_Out(1, 9, "SELECT  ");
 }
 
 static int  i = -20;
@@ -187,53 +187,55 @@ static void GenericShowBit(const Menu_Item_t *MenuItem)
         }
         s[0] = b ? '1' : '0';
         s[1] = 0;
-        Lcd_Out(1, DISP_LEN - 1, s);
+        Lcd_Out(1, DISP_LEN-1, s);
     }
 }
 #endif
 
 // clang-format off
 #ifndef MICRO_MENU_V3
-//        Name,   Next,   Previous, Parent,  Child,     SelectFunc, EnterFunc,  Text567890123456
+//         Name,  Next,   Previous, Parent,  Child,     SelectFunc, EnterFunc,  Text567890123456
 MENU_ITEM(Menu_1, Menu_2, Menu_2, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 1.         ");
 MENU_ITEM(Menu_2, Menu_1, Menu_1, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 2.         ");
 #else
-//        Name,    Next,      Previous,  Parent,    Child,     SelectFunc, EnterFunc, RefreshFunc,  EditFunc,   Text567890123456,  DataType,      Data,  SizeOrBit
-MENU_ITEM(Menu_1,  Menu_2,    Menu_3,    NULL_MENU, NULL_MENU, M_1_Select, M_1_Enter, NULL,         NULL,      "Menu 1          ");
-MENU_ITEM(Menu_2,  Menu_3,    Menu_1,    NULL_MENU, Menu_21,   NULL,       NULL,      NULL,         NULL,      "Menu 2          ");
-MENU_ITEM(Menu_21, NULL_MENU, NULL_MENU, Menu_2,    NULL_MENU, NULL,       NULL,      M_21_Refresh, NULL,      "Menu 21         ");
-MENU_ITEM(Menu_3,  Menu_1,    Menu_2,    NULL_MENU, Menu_31,   NULL,       NULL,      NULL,         NULL,      "Menu 3          ");
-DATA_ITEM(Menu_31, Menu_32,   Menu_33,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit bit        ", BIT_TYPE,      PORTA, 0);
-DATA_ITEM(Menu_32, Menu_33,   Menu_31,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit signed     ", SIGNED_TYPE,   PORTE, 1);
-DATA_ITEM(Menu_33, Menu_31,   Menu_32,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit unsigned   ", UNSIGNED_TYPE, PORTE, 1);
+//         Name,    Next,      Previous,  Parent,    Child,     SelectFunc, EnterFunc, RefreshFunc,  EditFunc,   Text567890123456,         DataType,      Data,  SizeOrBit
+MENU_ITEM (Menu_1,  Menu_2,    Menu_3,    NULL_MENU, NULL_MENU, M_1_Select, M_1_Enter, NULL,         NULL,      "Menu 1          ");
+MENU_ITEM (Menu_2,  Menu_3,    Menu_1,    NULL_MENU, Menu_21,   NULL,       NULL,      NULL,         NULL,      "Menu 2          ");
+ MENU_ITEM(Menu_21, NULL_MENU, NULL_MENU, Menu_2,    NULL_MENU, NULL,       NULL,      M_21_Refresh, NULL,      "Menu 21         ");
+MENU_ITEM (Menu_3,  Menu_1,    Menu_2,    NULL_MENU, Menu_31,   NULL,       NULL,      NULL,         NULL,      "Menu 3          ");
+ DATA_ITEM(Menu_31, Menu_32,   Menu_33,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit bit        ", BIT_TYPE,      PORTA, 0);
+ DATA_ITEM(Menu_32, Menu_33,   Menu_31,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit signed     ", SIGNED_TYPE,   PORTC, 1);
+ DATA_ITEM(Menu_33, Menu_31,   Menu_32,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit unsigned   ", UNSIGNED_TYPE, PORTC, 1);
 #endif
 // clang-format on
 
 // Lcd pinout settings
-sbit LCD_RS at PORTD2_bit;
-sbit LCD_EN at PORTD3_bit;
-sbit LCD_D7 at PORTD4_bit;
-sbit LCD_D6 at PORTD5_bit;
-sbit LCD_D5 at PORTD6_bit;
-sbit LCD_D4 at PORTD7_bit;
+sbit LCD_RS at RD4_bit;
+sbit LCD_EN at RD5_bit;
+sbit LCD_D7 at RD3_bit;
+sbit LCD_D6 at RD2_bit;
+sbit LCD_D5 at RD1_bit;
+sbit LCD_D4 at RD0_bit;
 
 // Pin direction
-sbit LCD_RS_Direction at DDD2_bit;
-sbit LCD_EN_Direction at DDD3_bit;
-sbit LCD_D7_Direction at DDD4_bit;
-sbit LCD_D6_Direction at DDD5_bit;
-sbit LCD_D5_Direction at DDD6_bit;
-sbit LCD_D4_Direction at DDD7_bit;
+sbit LCD_RS_Direction at TRISD4_bit;
+sbit LCD_EN_Direction at TRISD5_bit;
+sbit LCD_D7_Direction at TRISD3_bit;
+sbit LCD_D6_Direction at TRISD2_bit;
+sbit LCD_D5_Direction at TRISD1_bit;
+sbit LCD_D4_Direction at TRISD0_bit;
 
 int main(void)
 {
-    DDRA.B0 = 1; // Set PORTA.0 pin as output
-    
-    DDRE = 0xFF; // Set PORTE pins as outputs
+    ADCON1 = 7;
+    TRISA.B0 = 0;  // Set PORTA.0 pin as output
+    PORTA = 0;
 
-    DDRB = 0;     // Set PORTB pins as inputs
-    PORTB = 0xff; // Pull ups ON
-    PUD_bit = 0;  // Enable Pull ups
+    TRISC = 0;  // Set PORTE pins as outputs
+    PORTC = 0;
+
+    TRISB = 0xFF; // Set PORTB pins as inputs
+    NOT_WPUEN_bit = 0; // Enable Pull ups // Pull ups ON
 
     Lcd_Init();
     Lcd_Cmd(_LCD_CURSOR_OFF);

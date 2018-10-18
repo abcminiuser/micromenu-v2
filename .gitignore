@@ -1,3 +1,6 @@
+TMP
+micromenu-v2-master
+
 *.bak
 *.DBK
 *.cp
@@ -8,6 +11,13 @@
 *.dlt
 *.mcl
 *.lst
-TMP
-micromenu-v2-master
 *.SDF
+*.asm
+*.pdsbak
+*.dmp
+*.mcppi_callertable.txt
+*.workspace
+Debug
+*.bmk
+*.brk
+*.wch
