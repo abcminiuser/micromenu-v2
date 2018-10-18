@@ -3,13 +3,7 @@
 #define DISP_LEN 16
 #define DEBOUNCE_MS 150
 
-enum ButtonValues { BUTTON_NONE, 
-                    BUTTON_PARENT, 
-                    BUTTON_PREVIOUS, 
-                    BUTTON_NEXT, 
-                    BUTTON_PLUS, 
-                    BUTTON_MINUS, 
-                    BUTTON_CHILD };
+enum ButtonValues { BUTTON_NONE, BUTTON_PARENT, BUTTON_PREVIOUS, BUTTON_NEXT, BUTTON_PLUS, BUTTON_MINUS, BUTTON_CHILD };
 
 enum ButtonValues GetButtonPress(void)
 {
@@ -69,11 +63,11 @@ static void M_1_Select(void)
 static int  i = -20;
 static void M_21_Refresh(const Menu_Item_t *MenuItem)
 {
-    char s[DISP_LEN+1];
+    char s[DISP_LEN + 1];
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
     if(MenuItem->Text && (*MenuItem->Text)) {
-//      Lcd_Out_const(1, 1, MenuItem->Text);
+        //      Lcd_Out_const(1, 1, MenuItem->Text);
     }
     sprinti(s, "i=%6d", i);
     Lcd_Out(1, 9, s);
@@ -228,7 +222,7 @@ sbit LCD_D4_Direction at DDD7_bit;
 int main(void)
 {
     DDRA.B0 = 1; // Set PORTA.0 pin as output
-    
+
     DDRE = 0xFF; // Set PORTE pins as outputs
 
     DDRB = 0;     // Set PORTB pins as inputs

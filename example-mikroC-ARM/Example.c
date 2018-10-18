@@ -3,13 +3,7 @@
 #define DEBOUNCE_MS 150
 #define DISP_LEN 16
 
-enum ButtonValues { BUTTON_NONE, 
-                    BUTTON_PARENT,
-                    BUTTON_PREVIOUS,
-                    BUTTON_NEXT,
-                    BUTTON_PLUS,
-                    BUTTON_MINUS,
-                    BUTTON_CHILD };
+enum ButtonValues { BUTTON_NONE, BUTTON_PARENT, BUTTON_PREVIOUS, BUTTON_NEXT, BUTTON_PLUS, BUTTON_MINUS, BUTTON_CHILD };
 
 enum ButtonValues GetButtonPress(void)
 {
@@ -180,8 +174,8 @@ static void GenericShowBit(const Menu_Item_t *MenuItem)
         }
         s[0] = b ? '1' : '0';
         s[1] = 0;
-//      Lcd_Chr(1, DISP_LEN-5, s[0]);
-        Lcd_Out(1, DISP_LEN-5, s);
+        //      Lcd_Chr(1, DISP_LEN-5, s[0]);
+        Lcd_Out(1, DISP_LEN - 5, s);
     }
 }
 
@@ -219,8 +213,8 @@ sbit LCD_D4_Direction at DDD7_bit;
 
 int main(void)
 {
-    DDRA.B0 = 1;  // Set PORTA.0 pin as output
-    DDRE = 0xFF;  // Set PORTE pins as outputs
+    DDRA.B0 = 1; // Set PORTA.0 pin as output
+    DDRE = 0xFF; // Set PORTE pins as outputs
 
     DDRB = 0;     // Set PORTB pins as inputs
     PORTB = 0xff; // Pull ups ON

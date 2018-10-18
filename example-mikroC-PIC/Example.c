@@ -3,13 +3,7 @@
 #define DISP_LEN 16
 #define DEBOUNCE_MS 150
 
-enum ButtonValues { BUTTON_NONE,
-                    BUTTON_PARENT,
-                    BUTTON_PREVIOUS,
-                    BUTTON_NEXT,
-                    BUTTON_PLUS,
-                    BUTTON_MINUS,
-                    BUTTON_CHILD };
+enum ButtonValues { BUTTON_NONE, BUTTON_PARENT, BUTTON_PREVIOUS, BUTTON_NEXT, BUTTON_PLUS, BUTTON_MINUS, BUTTON_CHILD };
 
 enum ButtonValues GetButtonPress(void)
 {
@@ -56,7 +50,7 @@ char *strcpy_const(char *dest, const char *src)
 /** Example menu item specific enter callback function, run when the associated menu item is entered. */
 static void M_1_Enter(void)
 {
-//                 12345678
+    //                 12345678
     Lcd_Out(1, 9, "ENTER   ");
 }
 
@@ -69,11 +63,11 @@ static void M_1_Select(void)
 static int  i = -20;
 static void M_21_Refresh(const Menu_Item_t *MenuItem)
 {
-    char s[DISP_LEN+1];
+    char s[DISP_LEN + 1];
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
     if(MenuItem->Text && (*MenuItem->Text)) {
-//      Lcd_Out_const(1, 1, MenuItem->Text);
+        //      Lcd_Out_const(1, 1, MenuItem->Text);
     }
     sprinti(s, "i=%6d", i);
     Lcd_Out(1, 9, s);
@@ -187,7 +181,7 @@ static void GenericShowBit(const Menu_Item_t *MenuItem)
         }
         s[0] = b ? '1' : '0';
         s[1] = 0;
-        Lcd_Out(1, DISP_LEN-1, s);
+        Lcd_Out(1, DISP_LEN - 1, s);
     }
 }
 #endif
@@ -228,13 +222,13 @@ sbit LCD_D4_Direction at TRISD0_bit;
 int main(void)
 {
     ADCON1 = 7;
-    TRISA.B0 = 0;  // Set PORTA.0 pin as output
+    TRISA.B0 = 0; // Set PORTA.0 pin as output
     PORTA = 0;
 
-    TRISC = 0;  // Set PORTE pins as outputs
+    TRISC = 0; // Set PORTE pins as outputs
     PORTC = 0;
 
-    TRISB = 0xFF; // Set PORTB pins as inputs
+    TRISB = 0xFF;      // Set PORTB pins as inputs
     NOT_WPUEN_bit = 0; // Enable Pull ups // Pull ups ON
 
     Lcd_Init();
