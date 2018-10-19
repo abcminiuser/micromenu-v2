@@ -1,5 +1,6 @@
 TMP
 micromenu-v2-master
+Debug
 
 *.bak
 *.DBK
@@ -15,9 +16,9 @@ micromenu-v2-master
 *.asm
 *.pdsbak
 *.dmp
-*.mcppi_callertable.txt
 *.workspace
-Debug
 *.bmk
 *.brk
 *.wch
+*.mcpav_callertable.txt
+*.mcppi_callertable.txt

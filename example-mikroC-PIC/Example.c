@@ -1,3 +1,5 @@
+// Tested: P16F1947
+
 #include "MicroMenu.h"
 
 #define DISP_LEN 16
@@ -7,8 +9,6 @@ enum ButtonValues { BUTTON_NONE, BUTTON_PARENT, BUTTON_PREVIOUS, BUTTON_NEXT, BU
 
 enum ButtonValues GetButtonPress(void)
 {
-    //return BUTTON_NONE;
-    //return BUTTON_NEXT;
     if(Button(&PORTB, 0, DEBOUNCE_MS, 0))
         return BUTTON_PARENT;
     else if(Button(&PORTB, 1, DEBOUNCE_MS, 0))
@@ -60,8 +60,8 @@ static void M_1_Select(void)
     Lcd_Out(1, 9, "SELECT  ");
 }
 
-static int  i = -20;
-static void M_21_Refresh(const Menu_Item_t *MenuItem)
+static signed int i = 100;
+static void       M_21_Refresh(const Menu_Item_t *MenuItem)
 {
     char s[DISP_LEN + 1];
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
@@ -71,7 +71,7 @@ static void M_21_Refresh(const Menu_Item_t *MenuItem)
     }
     sprinti(s, "i=%6d", i);
     Lcd_Out(1, 9, s);
-    i++;
+    i--;
 }
 
 /** Generic function to write the text of a menu.
@@ -98,91 +98,90 @@ static void Generic_Show(const Menu_Item_t *MenuItem)
 #ifdef MICRO_MENU_V3
 static void GenericShowSInt(const Menu_Item_t *MenuItem)
 {
-    char s[DISP_LEN];
+    signed int i;
+    char       s[DISP_LEN];
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
     if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
         return;
-    if(MenuItem->DataItem)
-        if(MenuItem->DataItem->DataPtr) {
-            switch(MenuItem->DataItem->Size) {
-                case 1:
-                    sprinti(s, "%4d", *(signed short int *)MenuItem->DataItem->DataPtr);
-                    break;
-                case 2:
-                    sprinti(s, "%4d", *(signed int *)MenuItem->DataItem->DataPtr);
-                    break;
-                case 4:
-                    sprintl(s, "%4d", *(signed long int *)MenuItem->DataItem->DataPtr);
-                    break;
-                case 8:
-                    sprintl(s, "%4d", *(signed long long int *)MenuItem->DataItem->DataPtr);
-                    break;
-                default:
-                    break;
-            }
-            Lcd_Out(1, 13, s);
-        }
+    if(MenuItem->DataItem->DataPtr == NULL)
+        return;
+
+    switch(MenuItem->DataItem->Size) {
+        case 1:
+            i = *(signed short int *)MenuItem->DataItem->DataPtr;
+            sprinti(s, "%4d", i);
+            break;
+        case 2:
+            sprinti(s, "%4d", (signed int)(*(signed int *)(MenuItem->DataItem->DataPtr)));
+            break;
+        case 4:
+            sprintl(s, "%4Ld", (signed long int)(*(signed long int *)(MenuItem->DataItem->DataPtr)));
+            break;
+        case 8:
+            sprintl(s, "%4LLd", (signed long long int)(*(signed long long int *)(MenuItem->DataItem->DataPtr)));
+            break;
+        default:
+            break;
+    }
+    Lcd_Out(1, 13, s);
 }
 
 static void GenericShowUInt(const Menu_Item_t *MenuItem)
 {
-    char s[DISP_LEN];
+    unsigned int i;
+    char         s[DISP_LEN];
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
     if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
         return;
+    if(MenuItem->DataItem->DataPtr == NULL)
+        return;
 
-    if(MenuItem->DataItem->DataPtr) {
-        switch(MenuItem->DataItem->Size) {
-            case 1:
-                sprinti(s, "%4u", *(unsigned short int *)(MenuItem->DataItem->DataPtr));
-                break;
-            case 2:
-                sprinti(s, "%4u", *(unsigned int *)(MenuItem->DataItem->DataPtr));
-                break;
-            case 4:
-                sprintl(s, "%4u", *(unsigned long int *)(MenuItem->DataItem->DataPtr));
-                break;
-            case 8:
-                sprintl(s, "%4u", *(unsigned long long int *)(MenuItem->DataItem->DataPtr));
-                break;
-            default:
-                break;
-        }
-        Lcd_Out(1, 13, s);
+    switch(MenuItem->DataItem->Size) {
+        case 1:
+            i = *(unsigned short int *)MenuItem->DataItem->DataPtr;
+            sprinti(s, "%4u", i);
+            break;
+        case 2:
+            sprinti(s, "%4u", (unsigned int)(*(unsigned int *)(MenuItem->DataItem->DataPtr)));
+            break;
+        case 4:
+            sprintl(s, "%4Lu", (unsigned long int)(*(unsigned long int *)(MenuItem->DataItem->DataPtr)));
+            break;
+        case 8:
+            sprintl(s, "%4LLu", (unsigned long long int)(*(unsigned long long int *)(MenuItem->DataItem->DataPtr)));
+            break;
+        default:
+            break;
     }
+    Lcd_Out(1, 13, s);
 }
 
 static void GenericShowBit(const Menu_Item_t *MenuItem)
 {
-    char s[DISP_LEN + 1];
-    bit  b;
-    b = 0;
+    char s = '0';
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
     if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
         return;
+    if(MenuItem->DataItem->DataPtr == NULL)
+        return;
 
-    if(MenuItem->DataItem->DataPtr) {
-        if((MenuItem->DataItem->Bit >= 0) && (MenuItem->DataItem->Bit <= 7)) {
-            if((*(unsigned short int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
-                b = 1;
-        } else if((MenuItem->DataItem->Bit >= 8) && (MenuItem->DataItem->Bit <= 15)) {
-            if((*(unsigned int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
-                b = 1;
-        } else if((MenuItem->DataItem->Bit >= 16) && (MenuItem->DataItem->Bit <= 31)) {
-            if((*(unsigned long int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
-                b = 1;
-        } else if((MenuItem->DataItem->Bit >= 32) && (MenuItem->DataItem->Bit <= 63)) {
-            if((*(unsigned long long int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
-                b = 1;
-        } else {
-        }
-        s[0] = b ? '1' : '0';
-        s[1] = 0;
-        Lcd_Out(1, DISP_LEN - 1, s);
+    if((MenuItem->DataItem->Bit >= 0) && (MenuItem->DataItem->Bit <= 7)) {
+        if((*(unsigned short int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
+            s = '1';
+    } else if((MenuItem->DataItem->Bit >= 8) && (MenuItem->DataItem->Bit <= 15)) {
+        if((*(unsigned int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
+            s = '1';
+    } else if((MenuItem->DataItem->Bit >= 16) && (MenuItem->DataItem->Bit <= 31)) {
+        if((*(unsigned long int *)MenuItem->DataItem->DataPtr) & (1L << MenuItem->DataItem->Bit))
+            s = '1';
+    } else if((MenuItem->DataItem->Bit >= 32) && (MenuItem->DataItem->Bit <= 63)) {
+        if((*(unsigned long long int *)MenuItem->DataItem->DataPtr) & (1L << MenuItem->DataItem->Bit))
+            s = '1';
     }
+    Lcd_Chr(1, DISP_LEN - 1, s);
 }
 #endif
 
@@ -192,14 +191,14 @@ static void GenericShowBit(const Menu_Item_t *MenuItem)
 MENU_ITEM(Menu_1, Menu_2, Menu_2, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 1.         ");
 MENU_ITEM(Menu_2, Menu_1, Menu_1, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 2.         ");
 #else
-//         Name,    Next,      Previous,  Parent,    Child,     SelectFunc, EnterFunc, RefreshFunc,  EditFunc,   Text567890123456,         DataType,      Data,  SizeOrBit
+//         Name,    Next,      Previous,  Parent,    Child,     SelectFunc, EnterFunc, RefreshFunc,  EditFunc,   Text567890123456,  DataType,      Data,  SizeOrBit
 MENU_ITEM (Menu_1,  Menu_2,    Menu_3,    NULL_MENU, NULL_MENU, M_1_Select, M_1_Enter, NULL,         NULL,      "Menu 1          ");
 MENU_ITEM (Menu_2,  Menu_3,    Menu_1,    NULL_MENU, Menu_21,   NULL,       NULL,      NULL,         NULL,      "Menu 2          ");
  MENU_ITEM(Menu_21, NULL_MENU, NULL_MENU, Menu_2,    NULL_MENU, NULL,       NULL,      M_21_Refresh, NULL,      "Menu 21         ");
 MENU_ITEM (Menu_3,  Menu_1,    Menu_2,    NULL_MENU, Menu_31,   NULL,       NULL,      NULL,         NULL,      "Menu 3          ");
- DATA_ITEM(Menu_31, Menu_32,   Menu_33,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit bit        ", BIT_TYPE,      PORTA, 0);
+ DATA_ITEM(Menu_31, Menu_32,   Menu_33,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit bit        ", BIT_TYPE,      PORTE, 5);
  DATA_ITEM(Menu_32, Menu_33,   Menu_31,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit signed     ", SIGNED_TYPE,   PORTC, 1);
- DATA_ITEM(Menu_33, Menu_31,   Menu_32,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit unsigned   ", UNSIGNED_TYPE, PORTC, 1);
+ DATA_ITEM(Menu_33, Menu_31,   Menu_32,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit unsign     ", UNSIGNED_TYPE, PORTC, 1);
 #endif
 // clang-format on
 
@@ -221,11 +220,10 @@ sbit LCD_D4_Direction at TRISD0_bit;
 
 int main(void)
 {
-    ADCON1 = 7;
-    TRISA.B0 = 0; // Set PORTA.0 pin as output
-    PORTA = 0;
+    TRISE.B5 = 0; // Set PORTE.B5 pin as output
+    PORTE.B5 = 0;
 
-    TRISC = 0; // Set PORTE pins as outputs
+    TRISC = 0; // Set PORTC pins as outputs
     PORTC = 0;
 
     TRISB = 0xFF;      // Set PORTB pins as inputs

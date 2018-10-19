@@ -31,8 +31,7 @@ File0=Example.c
 File1=..\MenuConfig.h
 File2=..\MicroMenu.h
 File3=..\MicroMenu.c
-File4=Example.cp
-Count=5
+Count=4
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

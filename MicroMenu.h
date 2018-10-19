@@ -45,7 +45,7 @@ typedef struct tag_Data_MinMax {
 // Structure to stote a data info.
 typedef struct tag_Data_Item {
     enum MENU_DATA_TYPE_t DataType;
-    void *                DataPtr; // pointer to data
+    void *                DataPtr; // pointer to a data
     union {
         unsigned short int Bit;  // bit number for BIT_TYPE
         unsigned short int Size; // or data size of variable with UNSIGNED_TYPE's, SIGNED_TYPE's, etc.

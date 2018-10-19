@@ -29,9 +29,7 @@ File0=example.c
 File1=..\MenuConfig.h
 File2=..\MicroMenu.h
 File3=..\MicroMenu.c
-File4=.\C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\P16F1947.c
-File5=example.cp
-Count=6
+Count=4
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
