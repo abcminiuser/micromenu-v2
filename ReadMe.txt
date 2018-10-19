@@ -11,7 +11,11 @@ This is the second iteration of my original "MicroMenu" project, a tiny, royalty
 
 The new version of MicroMenu has increased type safety, a better example and an easier to configure interface. It supports menu navigation through both relative (Parent, Child, Next and Previous) menu item links, as well as to absolute menu item nodes.
 
-
+Only 3 files are needed:
+MenuConfig.h 
+MicroMenu.h
+MicroMenu.c 
+See usage in examples.
 
 
               MICRO-MENU V3
@@ -20,17 +24,18 @@ The new version of MicroMenu has increased type safety, a better example and an 
           (C) Ihor Nehrutsa, 2018
           LDmicro.GitHub@gmail.com
 
-V3.0
+V3.0.0
 Added a data container to the menu.
 One simple fundamental data type (bit, short, int, long, float, double) can be stored in the menu structure.
 Added callback ShowFunc to display data.
 Added callback RefreshFunc to update output when data changes.
 Added callback EditFunc to edit data.
+Added generic EditFunc to edit data.
 
 MICRO-MENU tested with:
-    - MicroC PRO for ARM;
     - MicroC PRO for AVR;
     - MicroC PRO for PIC;
+    - MicroC PRO for ARM;
     - Atollic TrueSTUDIO for STM32(GNU Arm Embedded Toolchain).
 
 MICRO-MENU links:
