@@ -1,4 +1,7 @@
+del /S aaa.
 del /S *.asm
+del /S *.asm.ini
+del /S *.lst.ini
 del /S *.log
 del /S *.lst
 del /S *.bak
@@ -13,6 +16,7 @@ del /S *.dlt
 del /S *.emcl
 del /S *.mcl
 del /S *.bin
+del /S *.c_tidy
 
 del /S *.dbk
 del /S *.sdf

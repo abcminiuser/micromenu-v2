@@ -213,22 +213,22 @@ static void Generic_EditBit(const Menu_Item_t *MenuItem, signed int Dir)
     }
 }
 
-#define EDIT(type_prefix)                                                                                                                           \
-    if(Dir > 0) {                                                                                                                                   \
-        if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue))      \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                                               \
-        else if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue)) \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                                               \
-        else                                                                                                                                        \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) += Dir;                                                                               \
-    } else if(Dir < 0) {                                                                                                                            \
-        if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue))      \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                                               \
-        else if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue)) \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                                               \
-        else                                                                                                                                        \
-            *(type_prefix int *)(MenuItem->DataItem->DataPtr) += Dir;                                                                               \
-    }
+#    define EDIT(type_prefix)                                                                                                                           \
+        if(Dir > 0) {                                                                                                                                   \
+            if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue))      \
+                *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                                               \
+            else if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue)) \
+                *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                                               \
+            else                                                                                                                                        \
+                *(type_prefix int *)(MenuItem->DataItem->DataPtr) += Dir;                                                                               \
+        } else if(Dir < 0) {                                                                                                                            \
+            if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue))      \
+                *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                                               \
+            else if((MenuItem->DataItem->MinMax) && ((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue)) \
+                *(type_prefix int *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                                               \
+            else                                                                                                                                        \
+                *(type_prefix int *)(MenuItem->DataItem->DataPtr) += Dir;                                                                               \
+        }
 
 static void Generic_EditInt(const Menu_Item_t *MenuItem, signed int Dir)
 {
@@ -243,32 +243,32 @@ static void Generic_EditInt(const Menu_Item_t *MenuItem, signed int Dir)
         if(MenuItem->DataItem->DataPtr) {
             switch(MenuItem->DataItem->Size) {
                 case 1:
-#ifdef USE_DATA_RANGE
+#    ifdef USE_DATA_RANGE
                     EDIT(signed short)
-#else
+#    else
                     (*(signed short int *)(MenuItem->DataItem->DataPtr)) += Dir;
-#endif
+#    endif
                     break;
                 case 2:
-#ifdef USE_DATA_RANGE
+#    ifdef USE_DATA_RANGE
                     EDIT(signed)
-#else
+#    else
                     (*(signed int *)(MenuItem->DataItem->DataPtr)) += Dir;
-#endif
+#    endif
                     break;
                 case 4:
-#ifdef USE_DATA_RANGE
+#    ifdef USE_DATA_RANGE
                     EDIT(signed long)
-#else
+#    else
                     (*(signed long int *)(MenuItem->DataItem->DataPtr)) += Dir;
-#endif
+#    endif
                     break;
                 case 8:
-#ifdef USE_DATA_RANGE
+#    ifdef USE_DATA_RANGE
                     EDIT(signed long long)
-#else
+#    else
                     (*(signed long long int *)(MenuItem->DataItem->DataPtr)) += Dir;
-#endif
+#    endif
                     break;
                 default:
                     break;

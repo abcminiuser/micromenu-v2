@@ -67,11 +67,11 @@ typedef const struct Menu_Item {
     const struct Menu_Item *Child;    /**< Pointer to the child menu item of this menu item */
     void (*SelectCallback)(void);     /**< Pointer to the optional menu-specific select callback of this menu item */
     void (*EnterCallback)(void);      /**< Pointer to the optional menu-specific enter callback of this menu item */
-#if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__)
+#    if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__)
     const char *Text; /**< Menu item text to pass to the menu display callback function */
-#else                 /**/
+#    else             /**/
     char Text[]; /**< Menu item text to pass to the menu display callback function */
-#endif
+#    endif
 } Menu_Item_t;
 #else
 typedef const struct Menu_Item {
@@ -83,14 +83,14 @@ typedef const struct Menu_Item {
     void (*EnterCallback)(void);                                /**< Pointer to the optional menu-specific enter callback of this menu item */
     void (*RefreshCallback)(const struct Menu_Item *);          /**< Pointer to the optional menu-specific refresh data callback of this menu item */
     void (*EditCallback)(const struct Menu_Item *, signed int); /**< Pointer to the optional menu-specific edit data callback of this menu item */
-#if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__)
+#    if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__)
     const char *       Text;                                    /**< Menu item text to pass to the menu display callback function */
-#else /**/
+#    else /**/
     char Text[]; /**< Menu item text to pass to the menu display callback function */
-#endif
-#ifdef USE_DATA
+#    endif
+#    ifdef USE_DATA
     const Data_Item_t *DataItem;
-#endif
+#    endif
 } Menu_Item_t;
 #endif
 
@@ -111,38 +111,39 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
 *  \param[in] EnterFunc   Function callback to execute when the menu item is entered, or \c NULL for no callback.
 */
 #if !defined(MICRO_MENU_V3) || !defined(USE_DATA)
-#define MENU_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, Text) \
-    extern Menu_Item_t MENU_ITEM_STORAGE Next;                                      \
-    extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                  \
-    extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                    \
-    extern Menu_Item_t MENU_ITEM_STORAGE Child;                                     \
-    Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, Text}
+#    define MENU_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, Text) \
+        extern Menu_Item_t MENU_ITEM_STORAGE Next;                                      \
+        extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                  \
+        extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                    \
+        extern Menu_Item_t MENU_ITEM_STORAGE Child;                                     \
+        Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, Text}
 #else
-#define MENU_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text) \
-    extern Menu_Item_t MENU_ITEM_STORAGE Next;                                                             \
-    extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                                         \
-    extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                           \
-    extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                            \
-    Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &NULL_DATA}
+#    define MENU_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text) \
+        extern Menu_Item_t MENU_ITEM_STORAGE Next;                                                             \
+        extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                                         \
+        extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                           \
+        extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                            \
+        Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &NULL_DATA}
 
-#define DATA_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, DataType, Data, SizeOrBit) \
-    extern Menu_Item_t MENU_ITEM_STORAGE Next;                                                                                        \
-    extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                                                                    \
-    extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                                                      \
-    extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                                                       \
-    Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit, NULL};                                                   \
-    Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &Data_##Name}
+#    define DATA_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, DataType, Data, SizeOrBit) \
+        extern Menu_Item_t MENU_ITEM_STORAGE Next;                                                                                        \
+        extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                                                                    \
+        extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                                                      \
+        extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                                                       \
+        Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit, NULL};                                                   \
+        Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &Data_##Name}
 
-#ifdef USE_DATA_RANGE
-#define DATA_RANGE(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, DataType, Data, SizeOrBit, MinValue, MaxValue) \
-    extern Menu_Item_t MENU_ITEM_STORAGE Next;                                                                                                             \
-    extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                                                                                         \
-    extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                                                                           \
-    extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                                                                            \
-    Data_MinMax_t MENU_ITEM_STORAGE MinMax_##Name = {MinValue, MaxValue};                                                                                  \
-    Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit, &MinMax_##Name};                                                              \
-    Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &Data_##Name}
-#endif
+#    ifdef USE_DATA_RANGE
+#        define DATA_RANGE(                                                                                                                         \
+            Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, DataType, Data, SizeOrBit, MinValue, MaxValue) \
+            extern Menu_Item_t MENU_ITEM_STORAGE Next;                                                                                              \
+            extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                                                                          \
+            extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                                                            \
+            extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                                                             \
+            Data_MinMax_t MENU_ITEM_STORAGE MinMax_##Name = {MinValue, MaxValue};                                                                   \
+            Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit, &MinMax_##Name};                                               \
+            Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &Data_##Name}
+#    endif
 #endif
 
 /** Relative navigational menu entry for \ref Menu_Navigate(), to move to the menu parent. */

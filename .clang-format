@@ -18,10 +18,12 @@ BreakStringLiterals: false
 BreakBeforeBinaryOperators: NonAssignment
 ColumnLimit:     160
 IndentCaseLabels: true
-#IndentPPDirectives: AfterHash
+IndentPPDirectives: AfterHash
 IndentWidth:     4
 NamespaceIndentation: All
 ReflowComments: false
 SortIncludes: false
 SpaceBeforeParens: Never
+SpacesBeforeTrailingComments: 1
+PointerAlignment: Right
 ...
