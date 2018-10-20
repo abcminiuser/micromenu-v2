@@ -36,17 +36,6 @@ void Lcd_Out_const(char row, char col, const char *text)
     }
 }
 
-char *strcpy_const(char *dest, const char *src)
-{
-    while(*src) {
-        *dest = *src;
-        dest++;
-        src++;
-    }
-    *dest = 0;
-    return dest;
-}
-
 /** Example menu item specific enter callback function, run when the associated menu item is entered. */
 static void M_1_Enter(void)
 {
@@ -66,9 +55,11 @@ static void       M_21_Refresh(const Menu_Item_t *MenuItem)
     char s[DISP_LEN + 1];
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
+    /*
     if(MenuItem->Text && (*MenuItem->Text)) {
-        //      Lcd_Out_const(1, 1, MenuItem->Text);
+        Lcd_Out_const(1, 1, MenuItem->Text);
     }
+    */
     sprinti(s, "i=%6d", i);
     Lcd_Out(1, 9, s);
     i--;
@@ -168,16 +159,16 @@ static void GenericShowBit(const Menu_Item_t *MenuItem)
     if(MenuItem->DataItem->DataPtr == NULL)
         return;
 
-    if((MenuItem->DataItem->Bit >= 0) && (MenuItem->DataItem->Bit <= 7)) {
+    if(MenuItem->DataItem->Bit < 8) {
         if((*(unsigned short int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
             s = '1';
-    } else if((MenuItem->DataItem->Bit >= 8) && (MenuItem->DataItem->Bit <= 15)) {
+    } else if(MenuItem->DataItem->Bit < 16) {
         if((*(unsigned int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
             s = '1';
-    } else if((MenuItem->DataItem->Bit >= 16) && (MenuItem->DataItem->Bit <= 31)) {
+    } else if(MenuItem->DataItem->Bit < 32) {
         if((*(unsigned long int *)MenuItem->DataItem->DataPtr) & (1L << MenuItem->DataItem->Bit))
             s = '1';
-    } else if((MenuItem->DataItem->Bit >= 32) && (MenuItem->DataItem->Bit <= 63)) {
+    } else {
         if((*(unsigned long long int *)MenuItem->DataItem->DataPtr) & (1L << MenuItem->DataItem->Bit))
             s = '1';
     }
@@ -187,18 +178,25 @@ static void GenericShowBit(const Menu_Item_t *MenuItem)
 
 // clang-format off
 #ifndef MICRO_MENU_V3
-//        Name,   Next,   Previous, Parent,  Child,     SelectFunc, EnterFunc,  Text567890123456
-MENU_ITEM(Menu_1, Menu_2, Menu_2, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 1.         ");
-MENU_ITEM(Menu_2, Menu_1, Menu_1, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 2.         ");
+//         Name,     Next,     Previous, Parent,    Child,     SelectFunc, EnterFunc,  Text567890123456
+MENU_ITEM (Menu_1,  Menu_2,    Menu_3,   NULL_MENU, NULL_MENU, M_1_Select, M_1_Enter, "Menu 1.         ");
+ MENU_ITEM(Menu_1_1, Menu_1_2, Menu_1_2, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 1.1.       ");
+ MENU_ITEM(Menu_1_2, Menu_1_1, Menu_1_1, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 1.2.       ");
+MENU_ITEM (Menu_2,   Menu_3,   Menu_1,   NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 2.         ");
+MENU_ITEM (Menu_3,   Menu_1,   Menu_2,   NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 3.         ");
 #else
-//         Name,    Next,      Previous,  Parent,    Child,     SelectFunc, EnterFunc, RefreshFunc,  EditFunc,   Text567890123456,  DataType,      Data,  SizeOrBit
-MENU_ITEM (Menu_1,  Menu_2,    Menu_3,    NULL_MENU, NULL_MENU, M_1_Select, M_1_Enter, NULL,         NULL,      "Menu 1          ");
-MENU_ITEM (Menu_2,  Menu_3,    Menu_1,    NULL_MENU, Menu_21,   NULL,       NULL,      NULL,         NULL,      "Menu 2          ");
- MENU_ITEM(Menu_21, NULL_MENU, NULL_MENU, Menu_2,    NULL_MENU, NULL,       NULL,      M_21_Refresh, NULL,      "Menu 21         ");
-MENU_ITEM (Menu_3,  Menu_1,    Menu_2,    NULL_MENU, Menu_31,   NULL,       NULL,      NULL,         NULL,      "Menu 3          ");
- DATA_ITEM(Menu_31, Menu_32,   Menu_33,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit bit        ", BIT_TYPE,      PORTE, 5);
- DATA_ITEM(Menu_32, Menu_33,   Menu_31,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit signed     ", SIGNED_TYPE,   PORTC, 1);
- DATA_ITEM(Menu_33, Menu_31,   Menu_32,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit unsign     ", UNSIGNED_TYPE, PORTC, 1);
+//          Name,    Next,      Previous,  Parent,    Child,     SelectFunc, EnterFunc, RefreshFunc,  EditFunc,   Text567890123456,  DataType,      Data,  SizeOrBit
+MENU_ITEM  (Menu_1,  Menu_2,    Menu_3,    NULL_MENU, NULL_MENU, M_1_Select, M_1_Enter, NULL,         NULL,      "Menu 1          ");
+MENU_ITEM  (Menu_2,  Menu_3,    Menu_1,    NULL_MENU, Menu_21,   NULL,       NULL,      NULL,         NULL,      "Menu 2          ");
+ MENU_ITEM (Menu_21, NULL_MENU, NULL_MENU, Menu_2,    NULL_MENU, NULL,       NULL,      M_21_Refresh, NULL,      "Menu 2.1        ");
+MENU_ITEM  (Menu_3,  Menu_1,    Menu_2,    NULL_MENU, Menu_31,   NULL,       NULL,      NULL,         NULL,      "Menu 3          ");
+ DATA_ITEM (Menu_31, Menu_32,   Menu_33,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit bit        ", BIT_TYPE,      PORTE, 5);
+ DATA_ITEM (Menu_32, Menu_33,   Menu_31,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit signed     ", SIGNED_TYPE,   PORTC, 1);
+#    ifdef USE_DATA_RANGE
+ DATA_RANGE(Menu_33, Menu_31,   Menu_32,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit unsign     ", UNSIGNED_TYPE, PORTC, 1, 10, 20);
+#    else
+ DATA_ITEM (Menu_33, Menu_31,   Menu_32,   Menu_3,    NULL_MENU, NULL,       NULL,      NULL,         NULL,      "Edit unsign     ", UNSIGNED_TYPE, PORTC, 1);
+#    endif
 #endif
 // clang-format on
 

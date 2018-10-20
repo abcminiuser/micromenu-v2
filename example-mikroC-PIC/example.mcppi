@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=example.c
+Value=..\MicroMenu.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -25,10 +25,10 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-File0=example.c
-File1=..\MenuConfig.h
-File2=..\MicroMenu.h
-File3=..\MicroMenu.c
+File0=..\MenuConfig.h
+File1=..\MicroMenu.h
+File2=..\MicroMenu.c
+File3=example.c
 Count=4
 [EEPROM]
 Count=0
@@ -55,7 +55,8 @@ File2=Lcd_Constants
 File3=Sprinti
 File4=C_Type
 File5=Sprintl
-Count=6
+File6=Sprintf
+Count=7
 [EXPANDED_NODES]
 0=example.mcppi
 1=Sources
@@ -66,5 +67,4 @@ Count=5
 [LIB_EXPANDED_NODES]
 0=mikroE Libraries
 1=System Libraries
-518=Trigonometry
-Count=3
+Count=2

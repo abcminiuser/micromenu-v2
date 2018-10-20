@@ -26,7 +26,9 @@
 #ifdef MICRO_MENU_V3
 #    define USE_DATA
 #    ifdef USE_DATA
-//#define USE_DATA_RANGE
+#        define USE_DATA_RANGE
+#        define USE_FLOAT_TYPE
+#        define USE_CHAR_TYPE
 #    endif
 #endif
 

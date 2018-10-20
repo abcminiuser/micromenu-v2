@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=example.c
+Value=..\MicroMenu.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -56,7 +56,8 @@ File2=Lcd_Constants
 File3=Sprinti
 File4=C_Type
 File5=Sprintl
-Count=6
+File6=Sprintf
+Count=7
 [EXPANDED_NODES]
 0=example.mcpar
 1=Sources
