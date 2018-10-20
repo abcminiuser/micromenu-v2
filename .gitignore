@@ -11,6 +11,7 @@ Debug
 *.dic
 *.dlt
 *.mcl
+*.emcl
 *.lst
 *.SDF
 *.asm
@@ -20,5 +21,7 @@ Debug
 *.bmk
 *.brk
 *.wch
+
 *.mcpav_callertable.txt
 *.mcppi_callertable.txt
+*.mcpar_callertable.txt
