@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=Example.c
+Value=..\MicroMenu.h
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -31,7 +31,9 @@ File0=Example.c
 File1=..\MenuConfig.h
 File2=..\MicroMenu.h
 File3=..\MicroMenu.c
-Count=4
+File4=Example.cp
+File5=..\MicroMenu.cp
+Count=6
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -61,7 +63,8 @@ File3=C_String
 File4=Sprinti
 File5=C_Type
 File6=Sprintl
-Count=7
+File7=Sprintf
+Count=8
 [EXPANDED_NODES]
 0=example.mcpav
 1=Sources

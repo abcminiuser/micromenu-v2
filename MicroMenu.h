@@ -26,12 +26,16 @@
 #ifdef USE_DATA
 // One simple fundamental data type can be stored in a menu structure.
 typedef enum MENU_DATA_TYPE_t {
-    MENU_TYPE = 0, // no data in menu structure
-    BIT_TYPE,      // for bit, sbit
-    UNSIGNED_TYPE, // for unsigned short, int, long, long long
-    SIGNED_TYPE,   // for   signed short, int, long, long long
-    FLOAT_TYPE,    // for float, double, long double
-    CHAR_TYPE,     // for char
+    MENU_TYPE = 0,        // no data in menu structure
+    BIT_TYPE,             // for bit, sbit
+    UNSIGNED_TYPE,        // for unsigned short, int, long, long long
+    SIGNED_TYPE,          // for   signed short, int, long, long long
+#    ifdef USE_FLOAT_TYPE //
+    FLOAT_TYPE,           // for float, double, long double
+#    endif                //
+#    ifdef USE_CHAR_TYPE  //
+    CHAR_TYPE,            // for char
+#    endif
 } MENU_DATA_TYPE;
 
 //#ifdef USE_DATA_RANGE
@@ -51,7 +55,7 @@ typedef struct tag_Data_Item {
         unsigned short int Size; // or data size of variable with UNSIGNED_TYPE's, SIGNED_TYPE's, etc.
     };
     //#ifdef USE_DATA_RANGE
-    Data_MinMax_t *MinMax;
+    const Data_MinMax_t *MinMax;
     //#endif
 } Data_Item_t;
 #endif
@@ -130,7 +134,7 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
         extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                                                                    \
         extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                                                      \
         extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                                                       \
-        Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit, NULL};                                                   \
+        Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit, &NULL_MINMAX};                                           \
         Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &Data_##Name}
 
 #    ifdef USE_DATA_RANGE
@@ -164,6 +168,7 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
 /** Null menu entry, used in \ref MENU_ITEM() definitions where no menu link is to be made. */
 extern Menu_Item_t MENU_ITEM_STORAGE NULL_MENU;
 extern Data_Item_t MENU_ITEM_STORAGE NULL_DATA;
+extern Data_MinMax_t MENU_ITEM_STORAGE NULL_MINMAX;
 
 /** Retrieves the currently selected menu item.
  *
@@ -208,5 +213,10 @@ void Menu_EnterCurrentItem(void);
 void Menu_Refresh(const Menu_Item_t *Menu);
 void Menu_Edit(const Menu_Item_t *MenuItem, signed int Dir);
 #endif
+
+char *strcpy_const(char *dest, MENU_ITEM_STORAGE char *src);
+char *strncpy_const(char *dest, MENU_ITEM_STORAGE char *src, size_t n);
+char *Menu_GetText(char *dest, const Menu_Item_t *MenuItem);
+char *Menu_DataStr(char *dest, const MENU_ITEM_STORAGE formatStr, const Menu_Item_t *MenuItem);
 
 #endif

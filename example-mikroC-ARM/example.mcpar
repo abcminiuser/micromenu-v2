@@ -1,5 +1,5 @@
 [DEVICE]
-Name=P16F1947
+Name=STM32F103R6
 Clock=16000000
 [MEMORY_MODEL]
 Value=0
@@ -25,11 +25,12 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-File0=..\MenuConfig.h
-File1=..\MicroMenu.h
-File2=..\MicroMenu.c
-File3=example.c
-Count=4
+File0=example.c
+File1=..\MenuConfig.h
+File2=..\MicroMenu.h
+File3=..\MicroMenu.c
+File4=.\C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Defs\STM32F103R6.c
+Count=5
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -58,13 +59,16 @@ File5=Sprintl
 File6=Sprintf
 Count=7
 [EXPANDED_NODES]
-0=example.mcppi
+0=example.mcpar
 1=Sources
-3=..\
-5=Header Files
-6=..\
-Count=5
-[LIB_EXPANDED_NODES]
-0=mikroE Libraries
-1=System Libraries
 Count=2
+[PROGRAMMER_OPTIONS]
+Value=SWD
+[PROGRAMMER_TYPE]
+Value=mE
+[DEBUGGER_TYPE]
+Value=
+[AT_DEBUG_STARTUP]
+LOAD_BIN_TO_RAM=0
+START_EXEC_FROM_ADDR=0
+START_ADDR=-1
