@@ -50,14 +50,14 @@ char *strcpy_const(char *dest, const char *src)
 /** Example menu item specific enter callback function, run when the associated menu item is entered. */
 static void M_1_Enter(void)
 {
-    //                 12345678
-    Lcd_Out(1, 9, "ENTER   ");
+    //             12345678
+    Lcd_Out(1, 9, " ENTER  ");
 }
 
 /** Example menu item specific select callback function, run when the associated menu item is selected. */
 static void M_1_Select(void)
 {
-    Lcd_Out(1, 9, "SELECT  ");
+    Lcd_Out(1, 9, " SELECT ");
 }
 
 static signed int i = 100;
@@ -187,7 +187,7 @@ static void GenericShowBit(const Menu_Item_t *MenuItem)
 
 // clang-format off
 #ifndef MICRO_MENU_V3
-//         Name,  Next,   Previous, Parent,  Child,     SelectFunc, EnterFunc,  Text567890123456
+//        Name,   Next,   Previous, Parent,  Child,     SelectFunc, EnterFunc,  Text567890123456
 MENU_ITEM(Menu_1, Menu_2, Menu_2, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 1.         ");
 MENU_ITEM(Menu_2, Menu_1, Menu_1, NULL_MENU, NULL_MENU, NULL,       NULL,      "Menu 2.         ");
 #else
