@@ -208,15 +208,15 @@ static void Generic_EditBit(const Menu_Item_t *MenuItem, signed int Dir)
     }
 }
 
-#    define EDIT(type_prefix)                                                                                     \
-        if((MenuItem->DataItem->MinMax == &NULL_MINMAX) || (MenuItem->DataItem->MinMax == NULL))                  \
-            *(type_prefix *)(MenuItem->DataItem->DataPtr) += Dir;                                                 \
-        else if((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue) \
-            *(type_prefix *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                 \
-        else if((*(type_prefix int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue) \
-            *(type_prefix *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                 \
-        else                                                                                                      \
-            *(type_prefix *)(MenuItem->DataItem->DataPtr) += Dir;
+#    define EDIT(a_type)                                                                                     \
+        if((MenuItem->DataItem->MinMax == &NULL_MINMAX) || (MenuItem->DataItem->MinMax == NULL))             \
+            *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;                                                 \
+        else if((*(a_type int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue) \
+            *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                 \
+        else if((*(a_type int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue) \
+            *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                 \
+        else                                                                                                 \
+            *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;
 
 static void Edit1Byte(const Menu_Item_t *MenuItem, signed int Dir)
 {
