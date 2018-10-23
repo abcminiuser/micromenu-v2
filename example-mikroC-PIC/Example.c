@@ -256,8 +256,8 @@ int main(void)
                 Menu_Navigate(MENU_NEXT);
                 break;
             case BUTTON_CHILD:
-                Menu_Navigate(MENU_CHILD);
                 Menu_EnterCurrentItem();
+                Menu_Navigate(MENU_CHILD);
                 break;
             case BUTTON_PARENT:
                 Menu_Navigate(MENU_PARENT);
