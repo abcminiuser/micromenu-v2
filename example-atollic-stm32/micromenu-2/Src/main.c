@@ -97,7 +97,6 @@ MENU_ITEM(Menu_1_1_1, NULL_MENU, NULL_MENU, Menu_1_1, NULL_MENU, NULL, NULL, "\t
 
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 	bool flagPressed = false;
   /* USER CODE END 1 */

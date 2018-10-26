@@ -49,6 +49,7 @@ static void M_1_Select(void)
     Lcd_Out(1, 9, " SELECT ");
 }
 
+/** Example menu item specific refresh callback function used to display externally modified data. */
 static signed int i = 100;
 static void       M_21_Refresh(const Menu_Item_t *MenuItem)
 {
@@ -76,9 +77,12 @@ static void Generic_Write(const char *Text)
     }
 }
 
+/** Generic function to write the text of a menu and allows access to the data field via the MenuItem pointer.
+ *
+ *  \param[in] Text   Text of the selected menu to write, in \ref MENU_ITEM_STORAGE memory space
+ */
 static void Generic_Show(const Menu_Item_t *MenuItem)
 {
-
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
     if(MenuItem->Text && (*MenuItem->Text)) {
@@ -97,7 +101,7 @@ static void GenericShowSInt(const Menu_Item_t *MenuItem)
         return;
     if(MenuItem->DataItem->DataPtr == NULL)
         return;
-
+#if 0
     switch(MenuItem->DataItem->Size) {
         case 1:
             i = *(signed short int *)MenuItem->DataItem->DataPtr;
@@ -115,6 +119,9 @@ static void GenericShowSInt(const Menu_Item_t *MenuItem)
         default:
             break;
     }
+#else
+    Menu_DataStr(&s, "%4d", MenuItem);
+#endif
     Lcd_Out(1, 13, s);
 }
 
@@ -129,6 +136,7 @@ static void GenericShowUInt(const Menu_Item_t *MenuItem)
     if(MenuItem->DataItem->DataPtr == NULL)
         return;
 
+#if 0
     switch(MenuItem->DataItem->Size) {
         case 1:
             i = *(unsigned short int *)MenuItem->DataItem->DataPtr;
@@ -146,33 +154,40 @@ static void GenericShowUInt(const Menu_Item_t *MenuItem)
         default:
             break;
     }
+#else
+    Menu_DataStr(&s, "%4u", MenuItem);
+#endif
     Lcd_Out(1, 13, s);
 }
 
 static void GenericShowBit(const Menu_Item_t *MenuItem)
 {
-    char s = '0';
+    char s[DISP_LEN];
     if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
         return;
     if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
         return;
     if(MenuItem->DataItem->DataPtr == NULL)
         return;
-
+    s[0] = '0';
+#if 0
     if(MenuItem->DataItem->Bit < 8) {
         if((*(unsigned short int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
-            s = '1';
+            s[0] = '1';
     } else if(MenuItem->DataItem->Bit < 16) {
         if((*(unsigned int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
-            s = '1';
+            s[0] = '1';
     } else if(MenuItem->DataItem->Bit < 32) {
         if((*(unsigned long int *)MenuItem->DataItem->DataPtr) & (1L << MenuItem->DataItem->Bit))
-            s = '1';
+            s[0] = '1';
     } else {
         if((*(unsigned long long int *)MenuItem->DataItem->DataPtr) & (1L << MenuItem->DataItem->Bit))
-            s = '1';
+            s[0] = '1';
     }
-    Lcd_Chr(1, DISP_LEN - 1, s);
+#else
+    Menu_DataStr(s, "", MenuItem);
+#endif
+    Lcd_Chr(1, DISP_LEN - 1, s[0]);
 }
 #endif
 
@@ -232,13 +247,18 @@ int main(void)
     Lcd_Cmd(_LCD_CURSOR_OFF);
     Lcd_Cmd(_LCD_CLEAR);
 
+/* Only one of the functions Generic_Write () or Generic_Show () is needed to display menu items.
+Generic_Write () is simpler, but can only display the Text field. 
+Generic_Show () - more difficult, but gives access to the structure of Data */
 /* Set up the default menu text write callback, and navigate to an absolute menu item entry. */
-#if 1
+#if 0
     Menu_SetGenericWriteCallback(Generic_Write);
 #else
     Menu_SetGenericShowCallback(Generic_Show);
 #endif
 #ifdef MICRO_MENU_V3
+    /* These functions displays a Data*/
+    /* Set up the default menu Data show callbacks. */
     Menu_SetGenericShowSInt(GenericShowSInt);
     Menu_SetGenericShowUInt(GenericShowUInt);
     Menu_SetGenericShowBit(GenericShowBit);

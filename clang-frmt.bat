@@ -10,3 +10,5 @@ for /F %%F in ('dir /b example-mikroC-PIC\*.h') do clang-format.exe -i -style=fi
 for /F %%F in ('dir /b example-mikroC-ARM\*.c') do clang-format.exe -i -style=file example-mikroC-ARM\%%F
 for /F %%F in ('dir /b example-mikroC-ARM\*.h') do clang-format.exe -i -style=file example-mikroC-ARM\%%F
 :pause
+
+copy2atollic.bat

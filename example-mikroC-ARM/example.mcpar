@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=..\MicroMenu.c
+Value=example.cp
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -29,7 +29,7 @@ File0=example.c
 File1=..\MenuConfig.h
 File2=..\MicroMenu.h
 File3=..\MicroMenu.c
-File4=.\C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Defs\STM32F103R6.c
+File4=example.cp
 Count=5
 [EEPROM]
 Count=0
@@ -67,7 +67,7 @@ Value=SWD
 [PROGRAMMER_TYPE]
 Value=mE
 [DEBUGGER_TYPE]
-Value=
+Value=default
 [AT_DEBUG_STARTUP]
 LOAD_BIN_TO_RAM=0
 START_EXEC_FROM_ADDR=0

@@ -23,8 +23,10 @@
  *  menu has no linked parent, child, next or previous entry.
  */
 Menu_Item_t MENU_ITEM_STORAGE NULL_MENU = {0};
+#ifdef USE_DATA
 Data_Item_t MENU_ITEM_STORAGE NULL_DATA = {0};
 Data_MinMax_t MENU_ITEM_STORAGE NULL_MINMAX = {0};
+#endif
 
 /** \internal
  *  Pointer to the generic menu text display function
@@ -173,12 +175,12 @@ void Menu_Refresh(const Menu_Item_t *MenuItem)
                 if(MenuShowSInt)
                     MenuShowSInt(MenuItem);
                 break;
-#    ifdef USE_FLOAT_TYPE
+#ifdef USE_FLOAT_TYPE
             case FLOAT_TYPE:
                 if(MenuShowFloat)
                     MenuShowFloat(MenuItem);
                 break;
-#    endif
+#endif
         }
     }
 }
@@ -208,50 +210,50 @@ static void Generic_EditBit(const Menu_Item_t *MenuItem, signed int Dir)
     }
 }
 
-#    define EDIT(a_type)                                                                                     \
-        if((MenuItem->DataItem->MinMax == &NULL_MINMAX) || (MenuItem->DataItem->MinMax == NULL))             \
-            *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;                                                 \
-        else if((*(a_type int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue) \
-            *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                 \
-        else if((*(a_type int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue) \
-            *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                 \
-        else                                                                                                 \
-            *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;
+#define EDIT(a_type)                                                                                     \
+    if((MenuItem->DataItem->MinMax == &NULL_MINMAX) || (MenuItem->DataItem->MinMax == NULL))             \
+        *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;                                                 \
+    else if((*(a_type int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue) \
+        *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                 \
+    else if((*(a_type int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue) \
+        *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                 \
+    else                                                                                                 \
+        *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;
 
 static void Edit1Byte(const Menu_Item_t *MenuItem, signed int Dir)
 {
-#    ifdef USE_DATA_RANGE
+#ifdef USE_DATA_RANGE
     EDIT(signed short int)
-#    else
+#else
     (*(signed short int *)(MenuItem->DataItem->DataPtr)) += Dir;
-#    endif
+#endif
 }
 
 static void Edit2Byte(const Menu_Item_t *MenuItem, signed int Dir)
 {
-#    ifdef USE_DATA_RANGE
+#ifdef USE_DATA_RANGE
     EDIT(signed int)
-#    else
+#else
     (*(signed int *)(MenuItem->DataItem->DataPtr)) += Dir;
-#    endif
+#endif
 }
 
 static void Edit4Byte(const Menu_Item_t *MenuItem, signed int Dir)
 {
-#    ifdef USE_DATA_RANGE
+#ifdef USE_DATA_RANGE
     EDIT(signed long int)
-#    else
+#else
     (*(signed long int *)(MenuItem->DataItem->DataPtr)) += Dir;
-#    endif
+#endif
 }
 
 static void Edit8Byte(const Menu_Item_t *MenuItem, signed int Dir)
 {
-#    ifdef USE_DATA_RANGE
+#ifdef USE_DATA_RANGE
     EDIT(signed long long int)
-#    else
+#else
     (*(signed long long int *)(MenuItem->DataItem->DataPtr)) += Dir;
-#    endif
+#endif
 }
 
 void Generic_EditInt(const Menu_Item_t *MenuItem, signed int Dir)
@@ -324,11 +326,11 @@ void Menu_Edit(const Menu_Item_t *MenuItem, signed int Dir)
             case SIGNED_TYPE:
                 Generic_EditInt(MenuItem, Dir);
                 break;
-#    ifdef USE_FLOAT_TYPE
+#ifdef USE_FLOAT_TYPE
             case FLOAT_TYPE:
                 Generic_EditFloat(MenuItem, Dir);
                 break;
-#    endif
+#endif
         }
     }
 }
@@ -369,7 +371,8 @@ char *Menu_GetText(char *dest, const Menu_Item_t *MenuItem)
     return dest;
 }
 
-char *Menu_DataStr(char *dest, const MENU_ITEM_STORAGE formatStr, const Menu_Item_t *MenuItem)
+#ifdef USE_DATA
+char *Menu_DataStr(char *dest, MENU_ITEM_STORAGE char *formatStr, const Menu_Item_t *MenuItem)
 {
     int i;
     *dest = 0;
@@ -448,3 +451,4 @@ char *Menu_DataStr(char *dest, const MENU_ITEM_STORAGE formatStr, const Menu_Ite
     }
     return dest;
 }
+#endif
