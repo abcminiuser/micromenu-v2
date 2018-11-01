@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=..\MicroMenu.h
+Value=Example.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -31,9 +31,7 @@ File0=Example.c
 File1=..\MenuConfig.h
 File2=..\MicroMenu.h
 File3=..\MicroMenu.c
-File4=Example.cp
-File5=..\MicroMenu.cp
-Count=6
+Count=4
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

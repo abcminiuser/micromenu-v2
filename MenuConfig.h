@@ -20,15 +20,19 @@
 #define _MICRO_MENU_CONFIG_H_
 
 #if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__) // || defined(__arm__)
-#define MICRO_MENU_V3
+#define MICRO_MENU_V3 // Comment out this line if only V2 features are needed.
 #endif
 
 #ifdef MICRO_MENU_V3
 #define USE_DATA
 #ifdef USE_DATA
 #define USE_DATA_RANGE
-#define USE_FLOAT_TYPE
-#define USE_CHAR_TYPE
+#ifdef USE_DATA_RANGE
+//#define JUMP_MIN_TO_MAX_TO_MIN // Comment out this line to prevent the jumps from maxValue to MinValue and backward when editing data.
+#endif
+
+#define USE_FLOAT_TYPE // Comment out this line if you do not plan to use float, double and long double type variables.
+#define USE_CHAR_TYPE  // Comment out this line if you do not plan to use char type variables.
 #endif
 #endif
 

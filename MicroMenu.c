@@ -210,15 +210,35 @@ static void Generic_EditBit(const Menu_Item_t *MenuItem, signed int Dir)
     }
 }
 
-#define EDIT(a_type)                                                                                     \
-    if((MenuItem->DataItem->MinMax == &NULL_MINMAX) || (MenuItem->DataItem->MinMax == NULL))             \
-        *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;                                                 \
-    else if((*(a_type int *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue) \
-        *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                 \
-    else if((*(a_type int *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue) \
-        *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                 \
-    else                                                                                                 \
+#ifdef JUMP_MIN_TO_MAX_TO_MIN
+#define EDIT(a_type)                                                                                         \
+    if((MenuItem->DataItem->MinMax == &NULL_MINMAX) || (MenuItem->DataItem->MinMax == NULL))                 \
+        *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;                                                     \
+    else if((Dir > 0) && (*(a_type *)(MenuItem->DataItem->DataPtr) == MenuItem->DataItem->MinMax->MaxValue)) \
+        *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                     \
+    else if((Dir < 0) && (*(a_type *)(MenuItem->DataItem->DataPtr) == MenuItem->DataItem->MinMax->MinValue)) \
+        *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                     \
+    else if((*(a_type *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue)         \
+        *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                     \
+    else if((*(a_type *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue)         \
+        *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                     \
+    else                                                                                                     \
         *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;
+#else
+#define EDIT(a_type)                                                                                         \
+    if((MenuItem->DataItem->MinMax == &NULL_MINMAX) || (MenuItem->DataItem->MinMax == NULL))                 \
+        *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;                                                     \
+    else if((Dir > 0) && (*(a_type *)(MenuItem->DataItem->DataPtr) == MenuItem->DataItem->MinMax->MaxValue)) \
+        ;                                                                                                    \
+    else if((Dir < 0) && (*(a_type *)(MenuItem->DataItem->DataPtr) == MenuItem->DataItem->MinMax->MinValue)) \
+        ;                                                                                                    \
+    else if((*(a_type *)(MenuItem->DataItem->DataPtr) + Dir) < MenuItem->DataItem->MinMax->MinValue)         \
+        *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MinValue;                     \
+    else if((*(a_type *)(MenuItem->DataItem->DataPtr) + Dir) > MenuItem->DataItem->MinMax->MaxValue)         \
+        *(a_type *)(MenuItem->DataItem->DataPtr) = MenuItem->DataItem->MinMax->MaxValue;                     \
+    else                                                                                                     \
+        *(a_type *)(MenuItem->DataItem->DataPtr) += Dir;
+#endif
 
 static void Edit1Byte(const Menu_Item_t *MenuItem, signed int Dir)
 {
