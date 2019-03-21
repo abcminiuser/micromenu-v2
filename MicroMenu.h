@@ -41,8 +41,8 @@ typedef enum MENU_DATA_TYPE_t {
 //#ifdef USE_DATA_RANGE
 // Data range can be defined to edit the data.
 typedef struct tag_Data_MinMax {
-    long long MinValue;
-    long long MaxValue;
+    signed long long MinValue;
+    signed long long MaxValue;
 } Data_MinMax_t;
 //#endif
 
@@ -87,6 +87,8 @@ typedef const struct Menu_Item {
     void (*EnterCallback)(void);                                /**< Pointer to the optional menu-specific enter callback of this menu item */
     void (*RefreshCallback)(const struct Menu_Item *);          /**< Pointer to the optional menu-specific refresh data callback of this menu item */
     void (*EditCallback)(const struct Menu_Item *, signed int); /**< Pointer to the optional menu-specific edit data callback of this menu item */
+    void (*SaveEditCallback)(const struct Menu_Item *);         /**< Pointer to the optional menu-specific edit data callback of this menu item */
+    void (*RestoreEditCallback)(const struct Menu_Item *);      /**< Pointer to the optional menu-specific edit data callback of this menu item */
 #if defined(__MIKROC_PRO_FOR_ARM__) || defined(__MIKROC_PRO_FOR_AVR__) || defined(__MIKROC_PRO_FOR_PIC__)
     const char *       Text;                                    /**< Menu item text to pass to the menu display callback function */
 #else /**/
@@ -127,7 +129,7 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
     extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                                         \
     extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                           \
     extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                            \
-    Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &NULL_DATA}
+    Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, NULL, NULL, Text, &NULL_DATA}
 
 #define DATA_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, DataType, Data, SizeOrBit) \
     extern Menu_Item_t MENU_ITEM_STORAGE Next;                                                                                        \
@@ -145,7 +147,7 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
     extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                                                                            \
     Data_MinMax_t MENU_ITEM_STORAGE MinMax_##Name = {MinValue, MaxValue};                                                                                  \
     Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit, &MinMax_##Name};                                                              \
-    Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &Data_##Name}
+    Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, NULL, NULL, Text, &Data_##Name}
 #endif
 #endif
 
@@ -213,7 +215,12 @@ void Menu_EnterCurrentItem(void);
 
 void Menu_Refresh(const Menu_Item_t *Menu);
 void Menu_Edit(const Menu_Item_t *MenuItem, signed int Dir);
+
+void Menu_SaveEditedCurrentItem(void);
+void Menu_RestoreEditedCurrentItem(void);
 #endif
+
+#define IS_MENU_NULL(Menu) (((Menu) == &NULL_MENU) || ((Menu) == NULL))
 
 char *strcpy_const(char *dest, MENU_ITEM_STORAGE char *src);
 char *strncpy_const(char *dest, MENU_ITEM_STORAGE char *src, size_t n);

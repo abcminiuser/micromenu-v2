@@ -28,7 +28,7 @@
 #ifdef USE_DATA
 #define USE_DATA_RANGE
 #ifdef USE_DATA_RANGE
-//#define JUMP_MIN_TO_MAX_TO_MIN // Comment out this line to prevent the jumps from maxValue to MinValue and backward when editing data.
+#define JUMP_MIN_TO_MAX_TO_MIN // Comment out this line to prevent the jumps from maxValue to MinValue and backward when editing data.
 #endif
 
 #define USE_FLOAT_TYPE // Comment out this line if you do not plan to use float, double and long double type variables.
