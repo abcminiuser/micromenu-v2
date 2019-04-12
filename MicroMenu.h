@@ -137,7 +137,17 @@ typedef void (*EditFunc)(const Menu_Item_t *MenuItem, signed intDir); // EditCal
     extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                                                      \
     extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                                                       \
     Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit, &NULL_MINMAX};                                           \
-    Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, &Data_##Name}
+    Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, NULL, NULL, Text, &Data_##Name}
+
+#define DATA_ITEM_(                                                                                                                                    \
+    Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, DataType, Data, SizeOrBit, SaveEditFunc, RestoreEditFunc) \
+    extern Menu_Item_t MENU_ITEM_STORAGE Next;                                                                                                         \
+    extern Menu_Item_t MENU_ITEM_STORAGE Previous;                                                                                                     \
+    extern Menu_Item_t MENU_ITEM_STORAGE Parent;                                                                                                       \
+    extern Menu_Item_t MENU_ITEM_STORAGE Child;                                                                                                        \
+    Data_Item_t MENU_ITEM_STORAGE Data_##Name = {DataType, &Data, SizeOrBit, &NULL_MINMAX};                                                            \
+    Menu_Item_t MENU_ITEM_STORAGE Name = {                                                                                                             \
+        &Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, SaveEditFunc, RestoreEditFunc, Text, &Data_##Name}
 
 #ifdef USE_DATA_RANGE
 #define DATA_RANGE(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, RefreshFunc, EditFunc, Text, DataType, Data, SizeOrBit, MinValue, MaxValue) \
@@ -225,6 +235,6 @@ void Menu_RestoreEditedCurrentItem(void);
 char *strcpy_const(char *dest, MENU_ITEM_STORAGE char *src);
 char *strncpy_const(char *dest, MENU_ITEM_STORAGE char *src, size_t n);
 char *Menu_GetText(char *dest, const Menu_Item_t *MenuItem);
-char *Menu_DataStr(char *dest, MENU_ITEM_STORAGE char *formatStr, const Menu_Item_t *MenuItem);
+char *Menu_DataStr(char *dest, const Menu_Item_t *MenuItem);
 
 #endif

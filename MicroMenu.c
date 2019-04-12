@@ -18,6 +18,8 @@
 
 #include "MicroMenu.h"
 
+#define QUESTION "?"
+
 /** This is used when an invalid menu handle is required in
  *  a \ref MENU_ITEM() definition, i.e. to indicate that a
  *  menu has no linked parent, child, next or previous entry.
@@ -61,6 +63,7 @@ Menu_Item_t *Menu_GetCurrentMenu(void)
 void Menu_Navigate(const Menu_Item_t *NewMenu)
 {
     void (*SelectCallback)(void);
+    void (*RefreshCallback)(const struct Menu_Item *);
 
     if((NewMenu == &NULL_MENU) || (NewMenu == NULL))
         return;
@@ -77,6 +80,11 @@ void Menu_Navigate(const Menu_Item_t *NewMenu)
 
     if(SelectCallback)
         SelectCallback();
+
+    RefreshCallback = MENU_ITEM_READ_POINTER(&CurrentMenuItem->RefreshCallback);
+
+    if(RefreshCallback)
+        RefreshCallback(NewMenu);
 }
 
 void Menu_SetGenericWriteCallback(void (*WriteFunc)(const char *Text))
@@ -227,9 +235,9 @@ static void Generic_EditBit(const Menu_Item_t *MenuItem, signed int Dir)
         } else if(MenuItem->DataItem->Bit < 16) {
             (*(unsigned int *)MenuItem->DataItem->DataPtr) ^= (1 << MenuItem->DataItem->Bit);
         } else if(MenuItem->DataItem->Bit < 32) {
-            (*(unsigned long int *)MenuItem->DataItem->DataPtr) ^= (1 << MenuItem->DataItem->Bit);
-        } else {
-            (*(unsigned long long int *)MenuItem->DataItem->DataPtr) ^= (1 << MenuItem->DataItem->Bit);
+            (*(unsigned long int *)MenuItem->DataItem->DataPtr) ^= (1L << MenuItem->DataItem->Bit);
+        } else { // if(MenuItem->DataItem->Bit < 64) {
+            (*(unsigned long long int *)MenuItem->DataItem->DataPtr) ^= (1LL << MenuItem->DataItem->Bit);
         }
     }
 }
@@ -416,6 +424,96 @@ char *Menu_GetText(char *dest, const Menu_Item_t *MenuItem)
 }
 
 #ifdef USE_DATA
+#if 1
+char *Menu_DataStr(char *dest, const Menu_Item_t *MenuItem)
+{
+    int i;
+    *dest = 0;
+    if((MenuItem == &NULL_MENU) || (MenuItem == NULL))
+        return dest;
+    if((MenuItem->DataItem == &NULL_DATA) || (MenuItem->DataItem == NULL))
+        return dest;
+    if(MenuItem->DataItem->DataPtr == NULL)
+        return dest;
+
+    switch(MenuItem->DataItem->DataType) {
+        case BIT_TYPE:
+            *dest = '0';
+            if(MenuItem->DataItem->Bit < 8) {
+                if((*(unsigned short int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
+                    *dest = '1';
+            } else if(MenuItem->DataItem->Bit < 16) {
+                if((*(unsigned int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
+                    *dest = '1';
+            } else if(MenuItem->DataItem->Bit < 32) {
+                if((*(unsigned long int *)MenuItem->DataItem->DataPtr) & (1L << MenuItem->DataItem->Bit))
+                    *dest = '1';
+            } else { // if(MenuItem->DataItem->Bit < 64) {
+                if((*(unsigned long long int *)MenuItem->DataItem->DataPtr) & (1LL << MenuItem->DataItem->Bit))
+                    *dest = '1';
+            }
+            dest++;
+            *dest = 0;
+            break;
+        case UNSIGNED_TYPE:
+            switch(MenuItem->DataItem->Size) {
+                case 1:
+                    i = *(unsigned short int *)MenuItem->DataItem->DataPtr;
+                    sprinti(dest, "%u", i);
+                    break;
+                case 2:
+                    sprinti(dest, "%u", (unsigned int)(*(unsigned int *)(MenuItem->DataItem->DataPtr)));
+                    break;
+                case 4:
+                    sprintl(dest, "%Lu", (unsigned long int)(*(unsigned long int *)(MenuItem->DataItem->DataPtr)));
+                    break;
+                case 8:
+                    sprintl(dest, "%LLu", (unsigned long long int)(*(unsigned long long int *)(MenuItem->DataItem->DataPtr)));
+                    break;
+                default:
+                    strcpy(dest, QUESTION);
+                    break;
+            }
+            break;
+        case SIGNED_TYPE:
+            switch(MenuItem->DataItem->Size) {
+                case 1:
+                    i = *(signed short int *)MenuItem->DataItem->DataPtr;
+                    sprinti(dest, "%d", i);
+                    break;
+                case 2:
+                    sprinti(dest, "%d", (signed int)(*(signed int *)(MenuItem->DataItem->DataPtr)));
+                    break;
+                case 4:
+                    sprintl(dest, "%Ld", (signed long int)(*(signed long int *)(MenuItem->DataItem->DataPtr)));
+                    break;
+                case 8:
+                    sprintl(dest, "%LLd", (signed long long int)(*(signed long long int *)(MenuItem->DataItem->DataPtr)));
+                    break;
+                default:
+                    strcpy(dest, QUESTION);
+                    break;
+            }
+            break;
+#ifdef USE_FLOAT_TYPE
+        case FLOAT_TYPE:
+            switch(MenuItem->DataItem->Size) {
+                case 4:
+                    sprintf(dest, "%g", (double)(*(double *)(MenuItem->DataItem->DataPtr)));
+                    break;
+                case 8:
+                    sprintf(dest, "%g", (long double)(*(long double *)(MenuItem->DataItem->DataPtr)));
+                    break;
+                default:
+                    strcpy(dest, QUESTION);
+                    break;
+            }
+            break;
+#endif
+    }
+    return dest;
+}
+#else
 char *Menu_DataStr(char *dest, MENU_ITEM_STORAGE char *formatStr, const Menu_Item_t *MenuItem)
 {
     int i;
@@ -430,17 +528,17 @@ char *Menu_DataStr(char *dest, MENU_ITEM_STORAGE char *formatStr, const Menu_Ite
     switch(MenuItem->DataItem->DataType) {
         case BIT_TYPE:
             *dest = '0';
-            if(/*(MenuItem->DataItem->Bit >= 0) && */ (MenuItem->DataItem->Bit < 8)) {
+            if(MenuItem->DataItem->Bit < 8) {
                 if((*(unsigned short int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
                     *dest = '1';
-            } else if(/*(MenuItem->DataItem->Bit >= 8) && */ (MenuItem->DataItem->Bit < 16)) {
+            } else if(MenuItem->DataItem->Bit < 16) {
                 if((*(unsigned int *)MenuItem->DataItem->DataPtr) & (1 << MenuItem->DataItem->Bit))
                     *dest = '1';
-            } else if(/*(MenuItem->DataItem->Bit >= 16) && */ (MenuItem->DataItem->Bit < 32)) {
+            } else if(MenuItem->DataItem->Bit < 32) {
                 if((*(unsigned long int *)MenuItem->DataItem->DataPtr) & (1L << MenuItem->DataItem->Bit))
                     *dest = '1';
-            } else { // if(/*(MenuItem->DataItem->Bit >= 32) && */(MenuItem->DataItem->Bit < 64)) {
-                if((*(unsigned long long int *)MenuItem->DataItem->DataPtr) & (1L << MenuItem->DataItem->Bit))
+            } else { // if(MenuItem->DataItem->Bit < 64) {
+                if((*(unsigned long long int *)MenuItem->DataItem->DataPtr) & (1LL << MenuItem->DataItem->Bit))
                     *dest = '1';
             }
             dest++;
@@ -461,6 +559,9 @@ char *Menu_DataStr(char *dest, MENU_ITEM_STORAGE char *formatStr, const Menu_Ite
                 case 8:
                     sprintl(dest, formatStr, (unsigned long long int)(*(unsigned long long int *)(MenuItem->DataItem->DataPtr)));
                     break;
+                default:
+                    strcpy(dest, QUESTION);
+                    break;
             }
             break;
         case SIGNED_TYPE:
@@ -478,6 +579,9 @@ char *Menu_DataStr(char *dest, MENU_ITEM_STORAGE char *formatStr, const Menu_Ite
                 case 8:
                     sprintl(dest, formatStr, (signed long long int)(*(signed long long int *)(MenuItem->DataItem->DataPtr)));
                     break;
+                default:
+                    strcpy(dest, QUESTION);
+                    break;
             }
             break;
 #ifdef USE_FLOAT_TYPE
@@ -489,10 +593,14 @@ char *Menu_DataStr(char *dest, MENU_ITEM_STORAGE char *formatStr, const Menu_Ite
                 case 8:
                     sprintf(dest, formatStr, (long double)(*(long double *)(MenuItem->DataItem->DataPtr)));
                     break;
+                default:
+                    strcpy(dest, QUESTION);
+                    break;
             }
             break;
 #endif
     }
     return dest;
 }
+#endif
 #endif
