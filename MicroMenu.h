@@ -41,8 +41,8 @@ typedef enum MENU_DATA_TYPE_t {
 //#ifdef USE_DATA_RANGE
 // Data range can be defined to edit the data.
 typedef struct tag_Data_MinMax {
-    signed long long MinValue;
-    signed long long MaxValue;
+    signed long long int MinValue;
+    signed long long int MaxValue;
 } Data_MinMax_t;
 //#endif
 
@@ -223,7 +223,7 @@ void Menu_EnterCurrentItem(void);
 
 #ifdef MICRO_MENU_V3
 
-void Menu_Refresh(const Menu_Item_t *Menu);
+void Menu_Refresh(const Menu_Item_t *MenuItem);
 void Menu_Edit(const Menu_Item_t *MenuItem, signed int Dir);
 
 void Menu_SaveEditedCurrentItem(void);
